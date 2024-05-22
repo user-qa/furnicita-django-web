@@ -35,19 +35,22 @@
     <link rel="stylesheet" href="{% static 'libs/font-material/css/material-design-iconic-font.min.css' %}">
     <link rel="stylesheet" href="{% static 'libs/slider-range/css/jslider.css' %}">
     <link rel="stylesheet" href="{% static 'libs/owl-carousel/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'popups/style.css' %}">
+
 
     <!-- Template CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/reponsive.css' %}">
 </head>
 
-<body
-        {% if 'contact' in request.path %}
+<body {% if 'contact' in request.path %}
 id="contact" class="blog"
 {% elif 'products' in request.path %}
 id="product-sidebar-left" class="product-grid-sidebar-left"
-{% elif 'blogs' in request.path %}
+{% elif '/blogs/' == request.path %}
 id="blog-list-sidebar-left" class="blog"
+{% elif 'details' in request.path %}
+id="blog-detail" class="blog"
 {% endif %}
 >
 {% include 'layouts/header-base.html' %}

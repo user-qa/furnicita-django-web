@@ -107,13 +107,13 @@
                             <li>
                                 <a href="{% url 'pages:home' %}" class="parent">Home</a>
                             </li>
-                            <li class="nav-link">
-                                <a href="{% url 'blogs:list' %}" class="parent">Blog</a>
+                            <li {% if request.path == '/blogs/' %} class="nav-link" {%endif%}>
+                            <a href="{% url 'blogs:list' %}" class="parent">Blog</a>
                             </li>
-                            <li>
+                            <li {% if request.path == '/products/' %} class="nav-link" {%endif%}>
                                 <a href="{% url 'products:list' %}" class="parent">Products</a>
                             </li>
-                            <li>
+                            <li {% if request.path == '/contact/' %} class="nav-link" {%endif%}>
                                 <a href="{% url 'pages:contact' %}" class="parent">Contact US</a>
                             </li>
                         </ul>

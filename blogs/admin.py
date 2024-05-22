@@ -1,3 +1,32 @@
 from django.contrib import admin
 
-# Register your models here.
+from blogs.models import AuthorModel, BlogCategoryModel, BlogModel, BlogTagModel
+
+
+@admin.register(AuthorModel)
+class AuthorModelAdmin(admin.ModelAdmin):
+    list_filter = ['name', 'position', 'profession', 'created_at']
+    list_display = ['name', 'position', 'profession', 'created_at']
+    search_fields = ['name', 'position', 'profession', 'created_at']
+
+
+@admin.register(BlogCategoryModel)
+class BlogCategoryModelAdmin(admin.ModelAdmin):
+    list_filter = ['name', 'created_at']
+    list_display = ['name', 'created_at']
+    search_fields = ['name', 'created_at']
+
+
+@admin.register(BlogTagModel)
+class BlogTagModelAdmin(admin.ModelAdmin):
+    list_filter = ['name', 'created_at']
+    list_display = ['name', 'created_at']
+    search_fields = ['name', 'created_at']
+
+
+@admin.register(BlogModel)
+class BlogModelAdmin(admin.ModelAdmin):
+    list_filter = ['title', 'created_at']
+    list_display = ['title', 'created_at']
+    search_fields = ['title', 'created_at']
+

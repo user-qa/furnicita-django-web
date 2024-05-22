@@ -105,8 +105,7 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="contact-form">
-                                            <form action="{% url 'pages:contact' %}" method="post"
-                                                  enctype="multipart/form-data">
+                                            <form action="{% url 'pages:contact' %}" method="post" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <div class="form-fields">
                                                     <div class="form-group row">
@@ -140,40 +139,6 @@
                                                     </button>
                                                 </div>
                                             </form>
-
-                                            <div id="popup" class="popup">
-                                                <div class="popup-content">
-                                                    <span class="close-btn" id="closePopupBtn">&times;</span>
-                                                    <h2>Popup Message</h2>
-                                                    {% if messages %}
-                                                    {% for message in messages %}
-                                                    <p>{{ message }}</p>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-
-                                            <script>
-                                                document.addEventListener('DOMContentLoaded', function() {
-                                                    const popup = document.getElementById('popup');
-                                                    const closePopupBtn = document.getElementById('closePopupBtn');
-
-                                                    closePopupBtn.addEventListener('click', () => {
-                                                        popup.style.display = 'none';
-                                                    });
-
-                                                    window.addEventListener('click', (event) => {
-                                                        if (event.target === popup) {
-                                                            popup.style.display = 'none';
-                                                        }
-                                                    });
-
-                                                    // Check if there are any messages and show the popup if true
-                                                    {% if messages %}
-                                                        popup.style.display = 'flex';
-                                                    {% endif %}
-                                                });
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
