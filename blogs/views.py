@@ -33,7 +33,6 @@ class BlogDetailView(TemplateView):
     template_name = 'blogs/detail.html'
 
     def get_context_data(self, **kwargs):
-
         categories = BlogCategoryModel.objects.all()
         blog = BlogModel.objects.get(pk=self.kwargs["pk"])
         famous_posts = BlogModel.objects.all().order_by()[:2]

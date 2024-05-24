@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 <div class="main-content">
     <div id="wrapper-site">
@@ -34,7 +35,7 @@
                     <div class="container">
                         <div class="content">
                             <div class="row">
-{% include 'blogs/blog-filter.html' %}
+                                {% include 'blogs/blog-filter.html' %}
                                 <div class="col-sm-8 col-lg-9 col-md-9 flex-xs-first main-blogs">
                                     <h2>Recent Posts</h2>
                                     {% for blog in blogs %}
@@ -95,4 +96,22 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+}
+
+H
+
+{% block extra_js %}
+<script>
+    function addUrlParameter(name, value){
+    let searchParams = new URLSearchParams(window. location.search)
+    if (searchParams.has(name) && searchParams.get(name) === value) {
+    searchParams. delete(name)
+    } else {
+    searchParams.set(name, value)
+}
+    window. location.search = searchParams.toString()
+}
+</script>
 {% endblock %}

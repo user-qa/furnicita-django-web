@@ -9,7 +9,7 @@
         <div class="block-content">
             {% for category in categories %}
             <div class="cateTitle hasSubCategory open level1">
-                <a class="cateItem" href="?cat={{category.id}}">{{category.name}}</a>
+                <a {% if 'blogs/details' in request.path %} href="{% url 'blogs:list' %}?cat={{category.id}}" {% endif %} style="cursor:pointer" class="cateItem" onclick="addUrlParameter('cat', '{{category.pk}}')">{{category.name}}</a>
             </div>
             {% endfor %}
         </div>
@@ -29,7 +29,7 @@
                                                             <i class="zmdi zmdi-comments"></i>13 comment
                                                         </span>
                     <span>
-                                                            <i class="zmdi zmdi-calendar-note"></i>{{blog.created_at |naturaltime}}
+                                                            <i class="zmdi zmdi-calendar-note"></i>{{blog.created_at | naturaltime}}
                                                         </span>
                     <p class="description">{{blog.description}}
                     </p>
@@ -52,7 +52,9 @@
             <ul class="listSidebarBlog list-unstyled">
                 {% for tag in tags %}
                 <li>
-                    <a href="?tag={{tag.id}}" title="Show products matching tag Hot Trend">{{tag.name}}</a>
+                    <a {% if '/blogs/details' in request.path %} href="{% url 'blogs:list' %}?tag={{tag.id}}" {% endif %}
+                    style="cursor:pointer" onclick="addUrlParameter('tag',
+                    '{{tag.pk}}')"  title="Show products matching tag Hot Trend"> {{tag.name}}</a>
                 </li>
                 {% endfor %}
             </ul>
