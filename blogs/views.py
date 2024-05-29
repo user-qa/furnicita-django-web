@@ -3,7 +3,6 @@ from blogs.models import BlogModel, BlogCategoryModel, BlogTagModel
 
 
 # Create your views here.
-<<<<<<< HEAD
 from django.views.generic import ListView
 from .models import BlogModel, BlogCategoryModel, BlogTagModel
 
@@ -13,14 +12,14 @@ class BlogListView(ListView):
     context_object_name = 'blogs'
     paginate_by = 2
 
-=======
+
 class BlogListView(ListView):
     template_name = 'blogs/blog-list.html'
     context_object_name = 'blogs'
     model = BlogModel
     paginate_by = 2
 
->>>>>>> new-branch-name
+
     def get_queryset(self):
         blogs = BlogModel.objects.all().order_by('-created_at')
         tag = self.request.GET.get('tag')
@@ -29,7 +28,7 @@ class BlogListView(ListView):
             blogs = blogs.filter(tags__in=tag)
 
         if cat:
-<<<<<<< HEAD
+
             blogs = blogs.filter(categories__id=cat)  # Assuming categories and tags are foreign keys
         if tag:
             blogs = blogs.filter(tags__id=tag)
@@ -50,11 +49,21 @@ class BlogListView(ListView):
 
 class BlogDetailView(TemplateView):
     template_name = 'blogs/detail.html'
-=======
-            blogs = blogs.filter(categories__in=cat)
+
+    def get_queryset(self):
+        blogs = BlogModel.objects.all().order_by('-created_at')
+        tag = self.request.GET.get('tag')
+        cat = self.request.GET.get('cat')
+        if tag:
+            blogs = blogs.filter(tags__in=tag)
+
+        if cat:
+            blogs = blogs.filter(categories__id=cat)  # Assuming categories and tags are foreign keys
+        if tag:
+            blogs = blogs.filter(tags__id=tag)
 
         return blogs
->>>>>>> new-branch-name
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

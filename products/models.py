@@ -36,7 +36,8 @@ class ManufacturerModel(models.Model):
 
 
 class ColorModel(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=10)
+    code = models.CharField(max_length=7)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -112,7 +113,3 @@ class ProductsModel(models.Model):
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
-
-
-
-

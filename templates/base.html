@@ -47,12 +47,15 @@
 
 <body {% if 'contact' in request.path %}
 id="contact" class="blog"
-{% elif 'products' in request.path %}
+{% elif '/products/' == request.path %}
 id="product-sidebar-left" class="product-grid-sidebar-left"
+{% elif '/products/details/' in request.path %}
+id="product-detail"
 {% elif '/blogs/' == request.path %}
 id="blog-list-sidebar-left" class="blog"
 {% elif '/blogs/details/' in request.path %}
 id="blog-detail" class="blog"
+
 {% endif %}
 >
 {% include 'layouts/header-base.html' %}
