@@ -65,25 +65,26 @@
 
                                     <div class="page-list col">
                                         <ul class="justify-content-center d-flex">
+                                            {% if page_obj.has_previous %}
                                             <li>
-                                                <a rel="prev" href="#" class="previous disabled js-search-link">
+                                                <a rel="prev" href="?page={{page_obj.previous_page_number}}" class="previous disabled js-search-link">
                                                     Previous
                                                 </a>
                                             </li>
-                                            <li class="current active">
-                                                <a rel="nofollow" href="#" class="disabled js-search-link">
-                                                    1
+                                            {% endif %}
+                                            {% for page in page_obj.paginator.page_range %}
+                                            <li {% if page == page_obj.number %} class="current active" {% endif %}>
+                                                <a rel="nofollow" href="?page={{page}}" class="disabled js-search-link">
+                                                    {{page}}
                                                 </a>
                                             </li>
+                                            {% endfor %}
                                             <li>
-                                                <a rel="nofollow" href="#" class="disabled js-search-link">
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a rel="next" href="#" class="next disabled js-search-link">
+                                                {% if page_obj.has_next %}
+                                                <a rel="next" href="?page={{page_obj.next_page_number}}" class="next disabled js-search-link">
                                                     Next
                                                 </a>
+                                                {% endif %}
                                             </li>
                                         </ul>
                                     </div>
