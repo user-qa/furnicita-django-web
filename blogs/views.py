@@ -3,6 +3,7 @@ from blogs.models import BlogModel, BlogCategoryModel, BlogTagModel
 
 
 # Create your views here.
+<<<<<<< HEAD
 from django.views.generic import ListView
 from .models import BlogModel, BlogCategoryModel, BlogTagModel
 
@@ -12,12 +13,23 @@ class BlogListView(ListView):
     context_object_name = 'blogs'
     paginate_by = 2
 
+=======
+class BlogListView(ListView):
+    template_name = 'blogs/blog-list.html'
+    context_object_name = 'blogs'
+    model = BlogModel
+    paginate_by = 2
+
+>>>>>>> new-branch-name
     def get_queryset(self):
         blogs = BlogModel.objects.all().order_by('-created_at')
-        cat = self.request.GET.get('cat')
         tag = self.request.GET.get('tag')
+        cat = self.request.GET.get('cat')
+        if tag:
+            blogs = blogs.filter(tags__in=tag)
 
         if cat:
+<<<<<<< HEAD
             blogs = blogs.filter(categories__id=cat)  # Assuming categories and tags are foreign keys
         if tag:
             blogs = blogs.filter(tags__id=tag)
@@ -38,20 +50,34 @@ class BlogListView(ListView):
 
 class BlogDetailView(TemplateView):
     template_name = 'blogs/detail.html'
+=======
+            blogs = blogs.filter(categories__in=cat)
+
+        return blogs
+>>>>>>> new-branch-name
 
     def get_context_data(self, **kwargs):
-        categories = BlogCategoryModel.objects.all()
-        blog = BlogModel.objects.get(pk=self.kwargs["pk"])
-        famous_posts = BlogModel.objects.all().order_by()[:2]
-        tags = BlogTagModel.objects.all()
-        context = {
-            'categories': categories,
-            'blog': blog,
-            'famous_posts': famous_posts,
-            'tags': tags,
-            'related_blogs': BlogModel.objects.filter(categories__in=blog.categories.all())[:3]
+        context = super().get_context_data(**kwargs)
+        context['categories'] = BlogCategoryModel.objects.all()
+        context['recent_posts'] = BlogModel.objects.all()[:2]
+        context['tags'] = BlogTagModel.objects.all()
 
-        }
+        return context
+
+
+class BlogDetailView(ListView):
+    template_name = 'blogs/detail.html'
+    context_object_name = 'blog'
+
+    def get_queryset(self):
+        blog = BlogModel.objects.get(id=self.kwargs["pk"])
+        return blog
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = BlogCategoryModel.objects.all()
+        context['recent_posts'] = BlogModel.objects.exclude(id=self.kwargs["pk"])[:2]
+        context['tags'] = BlogTagModel.objects.all()
 
         return context
 

@@ -21,6 +21,7 @@ class ProductsListView(ListView):
 
         return products
 
+<<<<<<< HEAD
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['catalogs'] = CatalogModel.objects.all()
@@ -28,12 +29,15 @@ class ProductsListView(ListView):
 
         return context
 
+=======
+>>>>>>> new-branch-name
 
 
 
 class ProductDetailView(TemplateView):
     template_name = 'products/product-detail.html'
 
+<<<<<<< HEAD
 
     def get_context_data(self, **kwargs):
         product = ProductsModel.objects.get(id=self.kwargs["pk"])
@@ -48,5 +52,7 @@ class ProductDetailView(TemplateView):
         }
 
         return context
+=======
+>>>>>>> new-branch-name
 
 

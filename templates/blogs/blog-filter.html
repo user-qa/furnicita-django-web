@@ -7,9 +7,10 @@
     <div class="sidebar-block">
         <div class="title-block">Categories</div>
         <div class="block-content">
-            {% for category in categories %}
+            {% for cat in categories %}
             <div class="cateTitle hasSubCategory open level1">
-                <a {% if 'blogs/details' in request.path %} href="{% url 'blogs:list' %}?cat={{category.id}}" {% endif %} style="cursor:pointer" class="cateItem" onclick="addUrlParameter('cat', '{{category.pk}}')">{{category.name}}</a>
+                <a class="cateItem" style="cursor:pointer" {% if '/details/' in request.path %} href="{% url 'blogs:list' %}?cat={{cat.id}}"
+                {% else %} onclick="addUrlParameter('cat', '{{cat.id}}')" {% endif %}>{{cat.name}}</a>
             </div>
             {% endfor %}
         </div>
@@ -18,29 +19,28 @@
     <!-- recent posts -->
     <div class="sidebar-block">
         <div class="title-block">Recent Posts</div>
-        {% for blog in famous_posts %}
         <div class="post-item-content">
+            {% for recent_post in recent_posts %}
             <div>
                 <div class="late-item first-child">
-                    <a href="{% url 'blogs:details' pk=blog.id %}">
-                        <p class="content-title">{{blog.title}}</p>
+                    <a href="{% url 'blogs:details' pk=recent_post.id %}">
+                        <p class="content-title">{{recent_post.title}}</p>
                     </a>
                     <span>
                                                             <i class="zmdi zmdi-comments"></i>13 comment
                                                         </span>
                     <span>
-                                                            <i class="zmdi zmdi-calendar-note"></i>{{blog.created_at | naturaltime}}
+                                                            <i class="zmdi zmdi-calendar-note"></i>{{recent_post.created_at|date}}
                                                         </span>
-                    <p class="description">{{blog.description}}
+                    <p class="description">{{recent_post.description}}
                     </p>
                     <p class="remove">
-                        <a href="{% url 'blogs:details' pk=blog.id %}">READ MORE</a>
+                        <a href="{% url 'blogs:details' pk=recent_post.id %}">READ MORE</a>
                     </p>
                 </div>
             </div>
-
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
     <!-- product tag -->
@@ -52,9 +52,7 @@
             <ul class="listSidebarBlog list-unstyled">
                 {% for tag in tags %}
                 <li>
-                    <a {% if '/blogs/details' in request.path %} href="{% url 'blogs:list' %}?tag={{tag.id}}" {% endif %}
-                    style="cursor:pointer" onclick="addUrlParameter('tag',
-                    '{{tag.pk}}')"  title="Show products matching tag Hot Trend"> {{tag.name}}</a>
+                    <a href="#" title="Show products matching tag {{tag.name}}">{{tag}}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -65,10 +63,10 @@
     <div class="sidebar-block group-image-special">
         <div class="effect">
             <a href="#">
-                <img class="img-fluid" src="{% static 'img/blog/advertising.jpg' %}"
-                     alt="banner-2" title="banner-2">
+                <img class="img-fluid" src="{% static 'img/blog/advertising.jpg' %}" alt="banner-2" title="banner-2">
             </a>
         </div>
     </div>
 
 </div>
+
