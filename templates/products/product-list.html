@@ -47,7 +47,8 @@
                                                 {% for cat in categories %}
                                                 <li>
 
-                                                    <a onclick="addUrlParameter('cat', '{{cat.id}}')" style="cursor:pointer">
+                                                    <a onclick="addUrlParameter('cat', '{{cat.id}}')"
+                                                       style="cursor:pointer">
                                                         <b>{{cat.name}}</b>
                                                         <span class="quantity">({{cat.products.count}})</span>
                                                     </a>
@@ -60,8 +61,9 @@
                                             <ul class="scroll-product">
                                                 {% for manufacture in manufacturers %}
                                                 <li>
-                                                    <a href="#">
-                                                        <b>{{manufacture}}</b>
+                                                    <a onclick="addUrlParameter('man', '{{manufacture.id}}')"
+                                                       style="cursor:pointer">
+                                                        <b>{{manufacture.name}}</b>
                                                         <span class="quantity">({{manufacture.products.count}})</span>
                                                     </a>
                                                 </li>
@@ -89,7 +91,8 @@
                                             <div>
                                                     <span class="left">
                                                         <label style="background-color:{{color.code}}"></label>
-                                                        <a href="#">
+                                                    <a onclick="addUrlParameter('col', '{{color.id}}')"
+                                                       style="cursor:pointer">
                                                             <span>{{color.name}}
                                                                 <span>({{color.products.count}})</span>
                                                             </span>
@@ -107,51 +110,12 @@
                                         </div>
                                         <div class="block-content">
                                             <ul class="listSidebarBlog list-unstyled">
+                                                {% for tag in tags %}
                                                 <li>
-                                                    <a href="#" title="Show products matching tag Hot Trend">Hot
-                                                        Trend</a>
+                                                    <a onclick="addUrlParameter('tag', '{{tag.id}}')"
+                                                       style="cursor:pointer" title="Show products matching tag {{tag.name}}">{{tag.name}}</a>
                                                 </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Jewelry">Jewelry</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="man.html" title="Show products matching tag Man">Man</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Party">Party</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag SamSung">SamSung</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shirt Dresses">Shirt
-                                                        Dresses</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shoes">Shoes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Summer">Summer</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Sweaters">Sweaters</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Winter">Winter</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Woman">Woman</a>
-                                                </li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                     </div>
@@ -1845,6 +1809,7 @@
     searchParams.set(name, value)
 }
     window. location.search = searchParams.toString()
-
+}
 </script>
 {% endblock %}
+

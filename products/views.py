@@ -12,11 +12,17 @@ class ProductsListView(ListView):
         products = ProductsModel.objects.all().order_by('-created_at')
         tag = self.request.GET.get('tag')
         cat = self.request.GET.get('cat')
+        col = self.request.GET.get('col')
+        man = self.request.GET.get('man')
 
         if tag:
             products = products.filter(tags__in=tag)
         if cat:
             products = products.filter(catalogs__in=cat)
+        if col:
+            products = products.filter(color__in=col)
+        if man:
+            products = products.filter(manufacturer=man)
 
         return products
 
@@ -25,6 +31,7 @@ class ProductsListView(ListView):
         context['categories'] = CatalogModel.objects.all()
         context['manufacturers'] = ManufacturerModel.objects.all()
         context['colors'] = ColorModel.objects.all()
+        context['tags'] = TagModel.objects.all()
 
 
 
