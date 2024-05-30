@@ -13,18 +13,13 @@
                             <div class="breadcrumb">
                                 <ol>
                                     <li>
-                                        <a href="#">
+                                        <a href="{% url 'pages:home' %}">
                                             <span>Home</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span>Living Room</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>Sofa</span>
+                                        <a href="{% url 'products:list' %}">
+                                            <span>Furnicita Products</span>
                                         </a>
                                     </li>
                                 </ol>
@@ -40,152 +35,11 @@
                                     <div class="sidebar-block">
                                         <div class="title-block">Categories</div>
                                         <div class="block-content">
+                                            {% for cat in categories %}
                                             <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapse-icons collapsed" data-toggle="collapse"
-                                                          data-target="#livingroom">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem" href="#">Living Room</a>
-                                                <div class="subCategory collapse" id="livingroom" aria-expanded="true"
-                                                     role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">Side Table</a>
-                                                        <div class="subCategory collapse" id="subCategory-fruits"
-                                                             aria-expanded="true" role="status">
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">Side Table</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">FIREPLACE</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">FIREPLACE</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">floor lamp</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">ottoman</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">armchair</a>
-                                                            </div>
-                                                            <div class="cateTitle">
-                                                                <a href="#" class="cateItem">cushion</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FIREPLACE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FIREPLACE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">floor lamp</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ottoman</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">armchair</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">cushion</a>
-                                                    </div>
-                                                </div>
+                                                <a class="cateItem" href="{% url 'products:list' %}?cat={{cat.id}}">{{cat.name}}</a>
                                             </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapsed collapse-icons" data-toggle="collapse"
-                                                          data-target="#bathroom">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem" href="#">Bathroom</a>
-                                                <div class="subCategory collapse" id="bathroom">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BROCCOLI</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">CABBAGE</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">CUCUMBER</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">EGGPLANT</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapsed collapse-icons" data-toggle="collapse"
-                                                          data-target="#diningroom">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem" href="#">Dining Rooom</a>
-                                                <div class="subCategory collapse" id="diningroom" aria-expanded="true"
-                                                     role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">DRY BREAD</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BREAD SLICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">FRENCH BREAD</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">BLACK BREAD</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapsed collapse-icons" data-toggle="collapse"
-                                                          data-target="#bedroom">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem" href="#">BedRoom</a>
-                                                <div class="subCategory collapse" id="bedroom" aria-expanded="true"
-                                                     role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ORANGE JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">APPLE JUICES</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="cateTitle hasSubCategory open level1">
-                                                    <span class="arrow collapsed collapse-icons" data-toggle="collapse"
-                                                          data-target="#kitchen">
-                                                        <i class="zmdi zmdi-minus"></i>
-                                                        <i class="zmdi zmdi-plus"></i>
-                                                    </span>
-                                                <a class="cateItem" href="#">Kitchen</a>
-                                                <div class="subCategory collapse" id="kitchen" aria-expanded="true"
-                                                     role="status">
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">ORANGE JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">TOMATO JUICES</a>
-                                                    </div>
-                                                    <div class="cateTitle">
-                                                        <a href="#" class="cateItem">APPLE JUICES</a>
-                                                    </div>
-
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
 
@@ -310,58 +164,18 @@
                                         </div>
                                         <div class="block-content">
                                             <ul class="listSidebarBlog list-unstyled">
+                                                {% for tag in tags %}
                                                 <li>
-                                                    <a href="#" title="Show products matching tag Hot Trend">Hot
-                                                        Trend</a>
+                                                    <a href="{% url 'products:list' %}?tag={{tag.id}}" title="Show products matching tag {{tag.name}}">{{tag.name}}</a>
                                                 </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Jewelry">Jewelry</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="man.html" title="Show products matching tag Man">Man</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Party">Party</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag SamSung">SamSung</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shirt Dresses">Shirt
-                                                        Dresses</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Shoes">Shoes</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Summer">Summer</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Sweaters">Sweaters</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Winter">Winter</a>
-                                                </li>
-
-                                                <li>
-                                                    <a href="#" title="Show products matching tag Woman">Woman</a>
-                                                </li>
+                                                {% endfor %}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-8 col-lg-9 col-md-9">
                                     <div class="main-product-detail">
-                                        <h2>Lorem ipsum dolor</h2>
+                                        <h2>{{product.name}}</h2>
                                         <div class="product-single row">
                                             <div class="product-detail col-xs-12 col-md-5 col-sm-5">
                                                 <div class="page-content" id="content">

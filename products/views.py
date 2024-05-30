@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView
 
 from products.models import ManufacturerModel, CatalogModel, ColorModel, TagModel, ProductsModel
 
@@ -34,21 +34,21 @@ class ProductsListView(ListView):
         context['colors'] = ColorModel.objects.all()
         context['tags'] = TagModel.objects.all()
 
-
-
-
-
-
         return context
 
 
-
-
-
-
-
-
-
-
-class ProductDetailView(TemplateView):
+class ProductDetailView(ListView):
     template_name = 'products/product-detail.html'
+    context_object_name = 'product'
+    model = ProductsModel
+
+    def get_queryset(self):
+        product = ProductsModel.objects.get(id=self.kwargs["pk"])
+        return product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = CatalogModel.objects.all()
+        context['tags'] = TagModel.objects.all()
+
+        return context

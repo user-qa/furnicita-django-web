@@ -14,21 +14,18 @@
                             <div class="breadcrumb">
                                 <ol>
                                     <li>
-                                        <a href="#">
+                                        <a href="{% url 'pages:home' %}">
                                             <span>Home</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <span>Living Room</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <span>Sofa</span>
+                                        <a href="{% url 'blogs:list' %}">
+
+                                            <span>Furnicita Blogs</span>
                                         </a>
                                     </li>
                                 </ol>
+
                             </div>
                         </div>
                     </nav>
@@ -67,7 +64,8 @@
                                         <ul class="justify-content-center d-flex">
                                             {% if page_obj.has_previous %}
                                             <li>
-                                                <a rel="prev" href="?page={{page_obj.previous_page_number}}" class="previous disabled js-search-link">
+                                                <a rel="prev" href="?page={{page_obj.previous_page_number}}"
+                                                   class="previous disabled js-search-link">
                                                     Previous
                                                 </a>
                                             </li>
@@ -81,7 +79,8 @@
                                             {% endfor %}
                                             <li>
                                                 {% if page_obj.has_next %}
-                                                <a rel="next" href="?page={{page_obj.next_page_number}}" class="next disabled js-search-link">
+                                                <a rel="next" href="?page={{page_obj.next_page_number}}"
+                                                   class="next disabled js-search-link">
                                                     Next
                                                 </a>
                                                 {% endif %}
