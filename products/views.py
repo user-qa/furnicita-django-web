@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.db.models import Q
 
 from products.models import ManufacturerModel, CatalogModel, ColorModel, TagModel, ProductsModel
 
@@ -46,9 +47,24 @@ class ProductDetailView(ListView):
         product = ProductsModel.objects.get(id=self.kwargs["pk"])
         return product
 
+    def get_related_products(self):
+        product = ProductsModel.objects.get(id=self.kwargs["pk"])
+        product_tags = product.tags.all()
+        product_categories = product.catalogs.all()
+
+        tag_condition = Q(tags__in=product_tags)
+        category_condition = Q(catalogs__in=product_categories)
+
+        related_products = ProductsModel.objects.filter(tag_condition | category_condition).exclude(id=product.id).distinct()[:3]
+
+        return related_products
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = CatalogModel.objects.all()
         context['tags'] = TagModel.objects.all()
+        context['related_products'] = self.get_related_products()
+
 
         return context
