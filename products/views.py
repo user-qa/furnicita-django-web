@@ -7,6 +7,7 @@ class ProductsListView(ListView):
     template_name = 'products/product-list.html'
     context_object_name = 'products'
     model = ProductsModel
+    paginate_by = 2
 
     def get_queryset(self):
         products = ProductsModel.objects.all().order_by('-created_at')

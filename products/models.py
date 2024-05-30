@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
@@ -88,12 +89,15 @@ class SizeModel(models.Model):
 
 
 class ProductsModel(models.Model):
+    image1 = models.ImageField(upload_to='product-images')
+    image2 = models.ImageField(upload_to='product-images', null=True)
+
     name = models.CharField(max_length=255)
     description = models.TextField()
-    images = models.ImageField(upload_to='product-images')
     count = models.IntegerField()
     sku = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    discount = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
 
     catalogs = models.ManyToManyField(CatalogModel, related_name='products')
     tags = models.ManyToManyField(TagModel, related_name='products')
@@ -109,6 +113,12 @@ class ProductsModel(models.Model):
 
     def __str__(self):
         return self.name
+
+    def is_discounted(self):
+        return self.discount != 0
+
+    def discounted_price(self):
+        return self.price * (100 - self.discount)/100
 
     class Meta:
         verbose_name = 'Product'
