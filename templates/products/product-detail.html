@@ -166,7 +166,8 @@
                                             <ul class="listSidebarBlog list-unstyled">
                                                 {% for tag in tags %}
                                                 <li>
-                                                    <a href="{% url 'products:list' %}?tag={{tag.id}}" title="Show products matching tag {{tag.name}}">{{tag.name}}</a>
+                                                    <a href="{% url 'products:list' %}?tag={{tag.id}}"
+                                                       title="Show products matching tag {{tag.name}}">{{tag.name}}</a>
                                                 </li>
                                                 {% endfor %}
                                             </ul>
@@ -181,49 +182,28 @@
                                                 <div class="page-content" id="content">
                                                     <div class="images-container">
                                                         <div class="js-qv-mask mask tab-content border">
-                                                            <div id="item1" class="tab-pane fade active in show">
-                                                                <img src="{% static 'img/product/1.jpg' %}" alt="img">
+                                                            {% for image in product.images.all %}
+                                                            <div id="item{{forloop.counter}}"
+                                                                 class="tab-pane fade {% if forloop.counter == 1 %} active in show {% endif %}">
+                                                                <img src="{{image.image.url}}" alt="img">
                                                             </div>
-                                                            <div id="item2" class="tab-pane fade">
-                                                                <img src="{% static 'img/product/2.jpg' %}" alt="img">
-                                                            </div>
-                                                            <div id="item3" class="tab-pane fade">
-                                                                <img src="{% static 'img/product/3.jpg' %}" alt="img">
-                                                            </div>
-                                                            <div id="item4" class="tab-pane fade">
-                                                                <img src="{% static 'img/product/5.jpg' %}" alt="img">
-                                                            </div>
+                                                            {% endfor %}
                                                             <div class="layer hidden-sm-down" data-toggle="modal"
                                                                  data-target="#product-modal">
                                                                 <i class="fa fa-expand"></i>
                                                             </div>
                                                         </div>
                                                         <ul class="product-tab nav nav-tabs d-flex">
-                                                            <li class="active col">
-                                                                <a href="#item1" data-toggle="tab" aria-expanded="true"
-                                                                   class="active show">
-                                                                    <img src="{% static 'img/product/1.jpg' %}"
+                                                            {% for image in product.images.all %}
+                                                            <li class="{% if forloop.counter == 1 %} active {% endif %} col">
+                                                                <a href="#item{{forloop.counter}}" data-toggle="tab"
+                                                                   {% if forloop.counter == 1 %} aria-expanded="true"
+                                                                   class="active show" {% endif %}>
+                                                                    <img src="{{image.image.url}}"
                                                                          alt="img">
                                                                 </a>
                                                             </li>
-                                                            <li class="col">
-                                                                <a href="#item2" data-toggle="tab">
-                                                                    <img src="{% static 'img/product/2.jpg' %}"
-                                                                         alt="img">
-                                                                </a>
-                                                            </li>
-                                                            <li class="col">
-                                                                <a href="#item3" data-toggle="tab">
-                                                                    <img src="{% static 'img/product/3.jpg' %}"
-                                                                         alt="img">
-                                                                </a>
-                                                            </li>
-                                                            <li class="col">
-                                                                <a href="#item4" data-toggle="tab">
-                                                                    <img src="{% static 'img/product/5.jpg' %}"
-                                                                         alt="img">
-                                                                </a>
-                                                            </li>
+                                                            {% endfor %}
                                                         </ul>
                                                         <div class="modal fade" id="product-modal" role="dialog">
                                                             <div class="modal-dialog">
@@ -236,57 +216,26 @@
                                                                                 <div>
                                                                                     <div class="images-container">
                                                                                         <div class="js-qv-mask mask tab-content">
-                                                                                            <div id="modal-item1"
-                                                                                                 class="tab-pane fade active in show">
-                                                                                                <img src="{% static 'img/product/1.jpg' %}"
+                                                                                            {% for image in product.images.all %}
+                                                                                            <div id="modal-item{{forloop.counter}}"
+                                                                                                 class="tab-pane fade {% if forloop.counter == 1 %} active in show {% endif %}">
+                                                                                                <img src="{{image.image.url}}"
                                                                                                      alt="img">
                                                                                             </div>
-                                                                                            <div id="modal-item2"
-                                                                                                 class="tab-pane fade">
-                                                                                                <img src="{% static 'img/product/2.jpg' %}"
-                                                                                                     alt="img">
-                                                                                            </div>
-                                                                                            <div id="modal-item3"
-                                                                                                 class="tab-pane fade">
-                                                                                                <img src="{% static 'img/product/3.jpg' %}"
-                                                                                                     alt="img">
-                                                                                            </div>
-                                                                                            <div id="modal-item4"
-                                                                                                 class="tab-pane fade">
-                                                                                                <img src="{% static 'img/product/5.jpg' %}"
-                                                                                                     alt="img">
-                                                                                            </div>
+                                                                                            {% endfor %}
                                                                                         </div>
                                                                                         <ul class="product-tab nav nav-tabs">
-                                                                                            <li class="active">
-                                                                                                <a href="#modal-item1"
+                                                                                            {% for image in product.images.all %}
+                                                                                            <li {% if forloop.counter == 1 %} class="active" {% endif %}>
+                                                                                                <a href="#modal-item{{forloop.counter}}"
                                                                                                    data-toggle="tab"
-                                                                                                   class=" active show">
-                                                                                                    <img src="{% static 'img/product/1.jpg' %}"
+                                                                                                   {% if forloop.counter == 1 %}
+                                                                                                   class=" active show" {% endif %}>
+                                                                                                    <img src="{{image.image.url}}"
                                                                                                          alt="img">
                                                                                                 </a>
                                                                                             </li>
-                                                                                            <li>
-                                                                                                <a href="#modal-item2"
-                                                                                                   data-toggle="tab">
-                                                                                                    <img src="{% static 'img/product/2.jpg' %}"
-                                                                                                         alt="img">
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#modal-item3"
-                                                                                                   data-toggle="tab">
-                                                                                                    <img src="{% static 'img/product/3.jpg' %}"
-                                                                                                         alt="img">
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li>
-                                                                                                <a href="#modal-item4"
-                                                                                                   data-toggle="tab">
-                                                                                                    <img src="{% static 'img/product/5.jpg' %}"
-                                                                                                         alt="img">
-                                                                                                </a>
-                                                                                            </li>
+                                                                                            {% endfor %}
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -302,35 +251,42 @@
                                             <div class="product-info col-xs-12 col-md-7 col-sm-7">
                                                 <div class="detail-description">
                                                     <div class="price-del">
-                                                        <span class="price">£150.00</span>
+                                                        {% if product.is_discounted == False %}
+                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        {% else %}
+                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        <span><strike>${{product.price}}</strike></span>
+                                                        {% endif %}
                                                         <span class="float-right">
                                                                 <span class="availb">Availability: </span>
+                                                            {% if product.is_available %}
                                                                 <span class="check">
                                                                     <i class="fa fa-check-square-o"
                                                                        aria-hidden="true"></i>IN STOCK</span>
                                                             </span>
+                                                        {% else %}
+                                                          <span class="check" style="color:red">
+                                                                    <i class="fa-solid fa-ban"
+                                                                       aria-hidden="true" ></i>NOT IN STOCK</span>
+                                                            </span>
+                                                        {% endif %}
                                                     </div>
-                                                    <p class="description">Proin gravida nibh vel velit auctor aliquet.
-                                                        Aenean lorem quis bibendum
-                                                        auctor, nisi elit consequat etiam non auctor.</p>
+                                                    <p class="description">{{product.description}}</p>
                                                     <div class="option has-border d-lg-flex size-color">
                                                         <div class="size">
                                                             <span class="size">size :</span>
                                                             <select>
                                                                 <option value="">Choose your size</option>
-                                                                <option value="">M</option>
-                                                                <option value="">l</option>
-                                                                <option value="">xl</option>
+                                                                {% for size in product.size.all %}
+                                                                <option value="{{size.name}}">{{size.name}}</option>
+                                                                {% endfor %}
                                                             </select>
                                                         </div>
                                                         <div class="colors">
                                                             <b class="title">Color : </b>
-                                                            <span class="blue"></span>
-                                                            <span class="yellow"></span>
-                                                            <span class="pink"></span>
-                                                            <span class="green"></span>
-                                                            <span class="brown"></span>
-                                                            <span class="red"></span>
+                                                            {% for color in product.color.all %}
+                                                            <span class="blue" style="background-color: {{color.code}}"></span>
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
                                                     <div class="has-border cart-area">
@@ -342,17 +298,6 @@
                                                                         <input type="text" name="qty"
                                                                                id="quantity_wanted" value="1"
                                                                                class="input-group form-control">
-
-                                                                        <span class="input-group-btn-vertical">
-                                                                                <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-up"
-                                                                                        type="button">
-                                                                                    +
-                                                                                </button>
-                                                                                <button class="btn btn-touchspin js-touchspin bootstrap-touchspin-down"
-                                                                                        type="button">
-                                                                                    -
-                                                                                </button>
-                                                                            </span>
                                                                     </div>
                                                                     <span class="add">
                                                                             <button class="btn btn-primary add-to-cart add-item"
@@ -382,7 +327,7 @@
                                                             </a>
                                                             <a href="#" class="email">
                                                                 <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                                <span>SEN TO A FRIEND</span>
+                                                                <span>SEND TO A FRIEND</span>
                                                             </a>
                                                             <a href="#" class="print">
                                                                 <i class="zmdi zmdi-print"></i>
@@ -420,23 +365,21 @@
                                                     <div class="content">
                                                         <p>SKU :
                                                             <span class="content2">
-                                                                    <a href="#">e-02154</a>
+                                                                    <a href="#">{{product.sku}}</a>
                                                                 </span>
                                                         </p>
                                                         <p>Categories :
                                                             <span class="content2">
-                                                                    <a href="#">Clothing</a>,
-                                                                    <a href="#">Men's Jackets</a>
+                                                                {% for cat in product.catalogs.all %}
+                                                                    <a href="{% url 'products:list' %}?cat={{cat.id}}">{{cat.name}}</a>{% if not forloop.last %},{% endif %}
+                                                                {% endfor %}
                                                                 </span>
                                                         </p>
                                                         <p>tags :
                                                             <span class="content2">
-                                                                    <a href="#">Jacket</a>,
-                                                                    <a href="#">Overcoat</a>,
-                                                                    <a href="#">Luxury</a>,
-                                                                    <a href="#">men</a>,
-                                                                    <a href="#">summer</a>,
-                                                                    <a href="#">autumn</a>
+                                                                {% for tag in product.tags.all %}
+                                                                    <a href="{% url 'products:list' %}?tag={{tag.id}}">{{tag.name}}</a>{% if not forloop.last %},{% endif %}
+                                                                {% endfor %}
                                                                 </span>
                                                         </p>
                                                     </div>
@@ -450,27 +393,18 @@
                                                     <a data-toggle="tab" href="#description" class="active show">Description</a>
                                                 </li>
                                                 <li>
-                                                    <a data-toggle="tab" href="#tag">Product Tags</a>
-                                                </li>
-                                                <li>
                                                     <a data-toggle="tab" href="#review">Reviews (2)</a>
                                                 </li>
                                             </ul>
 
                                             <div class="tab-content">
                                                 <div id="description" class="tab-pane fade in active show">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
-                                                        ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua.
+                                                    <p>{{product.description}}
                                                     </p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem
-                                                        ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                        eiusmod
-                                                        tempor incididunt ut labore et dolore magna aliqua.
+                                                    {% if product.long_detail_description %}
+                                                    <p>{{product.long_detail_description}}
                                                     </p>
+                                                    {% endif %}
                                                 </div>
 
                                                 <div id="review" class="tab-pane fade">

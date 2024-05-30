@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import ManufacturerModel, CatalogModel, SizeModel, ColorModel, TagModel, ProductsModel
+from products.models import ManufacturerModel, CatalogModel, SizeModel, ColorModel, TagModel, ProductsModel, ProductImagesModel
 
 
 @admin.register(ManufacturerModel)
@@ -38,8 +38,13 @@ class TagModelAdmin(admin.ModelAdmin):
     search_fields = ['name', 'created_at']
 
 
+class ProductImagesModelAdmin(admin.StackedInline):
+    model = ProductImagesModel
+
+
 @admin.register(ProductsModel)
 class ProductsModelAdmin(admin.ModelAdmin):
     list_display = ['name', 'count', 'price', 'sku', 'created_at']
     list_filter = ['name', 'count', 'sku', 'created_at']
     search_fields = ['name', 'count', 'sku', 'created_at']
+    inlines = [ProductImagesModelAdmin]
