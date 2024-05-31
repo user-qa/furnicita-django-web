@@ -57,6 +57,21 @@ id="blog-list-sidebar-left" class="blog"
 {% elif '/blogs/details/' in request.path %}
 id="blog-detail" class="blog"
 
+
+{% elif '/users/checkout/' == request.path %}
+class="product-checkout checkout-cart"
+{% elif '/users/wishlist/' == request.path %}
+class="user-wishlist blog"
+{% elif '/users/change/password/' == request.path %}
+class="user-reset-password blog"
+{% elif '/users/register/' == request.path %}
+class="user-register blog"
+{% elif '/users/login/' == request.path %}
+class="user-login blog"
+{% elif '/users/cart/' == request.path %}
+class="product-cart checkout-cart blog"
+{% elif '/users/account/' == request.path %}
+class="user-acount"
 {% endif %}
 >
 {% include 'layouts/header-base.html' %}
