@@ -3,13 +3,14 @@ import pytz
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import logout, get_user_model
+from django.contrib.auth import logout, get_user_model, authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, FormView
 
-from users.forms import RegisterForm, EmailVerificationForm
+from users.forms import RegisterForm, EmailVerificationForm, LoginForm
 from users.models import ConfirmationCodesModel
 
 UserModel = get_user_model()
@@ -49,6 +50,7 @@ def verify_email(request):
                 if sent_time > time_now:
                     db_user = UserModel.objects.filter(id=user_and_code.user.id).first()
                     db_user.is_active = True
+                    db_user.save()
                     user_and_code.delete()
                     return redirect('users:login')
 
@@ -88,8 +90,30 @@ class RegisterView(CreateView):
 
 
 
-class LoginView(TemplateView):
+class LoginView(FormView):
     template_name = 'users/login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('pages:home')
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(self.request, user=user)
+            return redirect(self.success_url)
+        else:
+            storage = messages.get_messages(self.request)
+            storage.used = True
+            messages.error(self.request, 'Wrong Password or Username')
+
+            return redirect('users:login')
+
+    def form_invalid(self, form):
+        storage = messages.get_messages(self.request)
+        storage.used = True
+        messages.error(self.request, 'Wrong Password or Username')
+        return redirect('users:login')
 
 
 def logout_view(request):
@@ -110,7 +134,7 @@ class ChangePasswordView(TemplateView):
     template_name = 'users/reset-password.html'
 
 
-class AccountView(TemplateView):
+class AccountView(LoginRequiredMixin, TemplateView):
     template_name = 'users/account.html'
 
 

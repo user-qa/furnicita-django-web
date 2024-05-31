@@ -154,6 +154,7 @@
                                         <span>My Account</span>
                                     </a>
                                 </div>
+                                {% if request.user.is_authenticated %}
                                 <div>
                                     <a class="login" href="{% url 'users:login' %}" rel="nofollow"
                                        title="Log in to your customer account">
@@ -161,6 +162,15 @@
                                         <span>Sign in</span>
                                     </a>
                                 </div>
+                                {% else %}
+                                <div>
+                                    <a class="login" href="{% url 'users:logout' %}" rel="nofollow"
+                                       title="Log out from your customer account">
+                                        <i class="fa fa-sign-in"></i>
+                                        <span>Sign out</span>
+                                    </a>
+                                </div>
+                                {% endif %}
                                 <div>
                                     <a class="register" href="{% url 'users:register' %}" rel="nofollow"
                                        title="Register Account">
