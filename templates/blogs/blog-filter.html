@@ -9,8 +9,7 @@
         <div class="block-content">
             {% for cat in categories %}
             <div class="cateTitle hasSubCategory open level1">
-                <a class="cateItem" style="cursor:pointer" {% if '/details/' in request.path %} href="{% url
-                'blogs:list' %}?cat={{cat.id}}"
+                <a class="cateItem" style="cursor:pointer" {% if '/details/' in request.path %} href="{% url 'blogs:list' %}?cat={{cat.id}}"
                 {% else %} onclick="addUrlParameter('cat', '{{cat.id}}')" {% endif %}>{{cat.name}}</a>
             </div>
             {% endfor %}
@@ -53,8 +52,7 @@
             <ul class="listSidebarBlog list-unstyled">
                 {% for tag in tags %}
                 <li>
-                    <a style="cursor:pointer" {% if '/details/' in request.path %} href="{% url 'blogs:list'
-                    %}?tag={{tag.id}}" {% else %} onclick="addUrlParameter('tag', '{{tag.id}}')" {% endif %} title="Show
+                    <a style="cursor:pointer" {% if '/details/' in request.path %} href="{% url 'blogs:list'%}?tag={{tag.id}}" {% else %} onclick="addUrlParameter('tag', '{{tag.id}}')" {% endif %} title="Show
                     products matching tag {{tag.name}}">{{tag}}</a>
                 </li>
                 {% endfor %}
