@@ -1,6 +1,7 @@
 import random
-import pytz
 from datetime import datetime, timedelta
+
+import pytz
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout, get_user_model, authenticate, login
@@ -8,12 +9,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, FormView
+from django.views.generic import TemplateView, CreateView, FormView, UpdateView
 
-from users.forms import RegisterForm, EmailVerificationForm, LoginForm
-from users.models import ConfirmationCodesModel
+from users.forms import RegisterForm, EmailVerificationForm, LoginForm, AccountModelForm
+from users.models import ConfirmationCodesModel, AccountModel
 
 UserModel = get_user_model()
+
 
 def send_confirmation_email(user):
     random_code = random.randint(100000, 999999)
@@ -46,7 +48,8 @@ def verify_email(request):
             user_and_code = ConfirmationCodesModel.objects.filter(code=received_code).first()
             if user_and_code:
                 time_now = datetime.now(pytz.timezone(settings.TIME_ZONE))
-                sent_time = user_and_code.created_at.astimezone(pytz.timezone(settings.TIME_ZONE)) + timedelta(minutes=2)
+                sent_time = user_and_code.created_at.astimezone(pytz.timezone(settings.TIME_ZONE)) + timedelta(
+                    minutes=2)
                 if sent_time > time_now:
                     db_user = UserModel.objects.filter(id=user_and_code.user.id).first()
                     db_user.is_active = True
@@ -89,11 +92,11 @@ class RegisterView(CreateView):
         return redirect('users:register')
 
 
-
 class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
     success_url = reverse_lazy('pages:home')
+
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
@@ -122,6 +125,19 @@ def logout_view(request):
         return redirect('pages:home')
 
 
+class AccountView(LoginRequiredMixin, UpdateView):
+    template_name = 'users/account.html'
+    form_class = AccountModelForm
+    success_url = reverse_lazy('users:account')
+    context_object_name = 'account'
+    login_url = reverse_lazy('users:login')
+
+    def get_object(self, queryset=None):
+        account, _ = AccountModel.objects.get_or_create(user=self.request.user)
+        return account
+
+
+
 class WishlistView(TemplateView):
     template_name = 'users/wishlist.html'
 
@@ -132,10 +148,6 @@ class CartView(TemplateView):
 
 class ChangePasswordView(TemplateView):
     template_name = 'users/reset-password.html'
-
-
-class AccountView(LoginRequiredMixin, TemplateView):
-    template_name = 'users/account.html'
 
 
 class CheckoutView(TemplateView):
