@@ -40,8 +40,9 @@
             <div class="desktop_cart">
                 <div class="blockcart block-cart cart-preview tiva-toggle">
                     <div class="header-cart tiva-toggle-btn">
-                        <span class="cart-products-count">1</span>
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+{% if request|get_user_cart|length != 0%}
+                        <span class="cart-products-count">{{request|get_user_cart|length}}</span>
+                        {% endif %}                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                     </div>
                     <div class="dropdown-content">
                         <div class="cart-content">
@@ -64,7 +65,7 @@
                                         </div>
                                     </td>
                                     <td class="action">
-                                        <a class="remove" href="{% url 'products:add_or_remove' %}?next={{request.get_full_path|urlencode}}">
+                                        <a class="remove" href="{% url 'products:add_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -352,8 +353,9 @@
                     <div class="desktop_cart">
                         <div class="blockcart block-cart cart-preview tiva-toggle">
                             <div class="header-cart tiva-toggle-btn">
-                                <span class="cart-products-count">1</span>
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        {% if request|get_user_cart|length != 0%}
+                        <span class="cart-products-count">{{request|get_user_cart|length}}</span>
+                        {% endif %}                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             </div>
                             <div class="dropdown-content">
                                 <div class="cart-content">
