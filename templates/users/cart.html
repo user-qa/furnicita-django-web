@@ -91,7 +91,7 @@
                                                             </div>
                                                             <div class="col-md-2 col text-xs-right align-self-end">
                                                                 <div class="cart-line-product-actions ">
-                                                                    <a class="remove-from-cart" rel="nofollow" href="#"
+                                                                    <a class="remove-from-cart" rel="nofollow" href="{% url 'products:add_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}"
                                                                        data-link-action="delete-from-cart"
                                                                        data-id-product="1">
                                                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
