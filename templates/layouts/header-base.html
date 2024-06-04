@@ -46,27 +46,29 @@
                         <div class="cart-content">
                             <table>
                                 <tbody>
+                                {% for product in request|get_user_cart %}
                                 <tr>
                                     <td class="product-image">
-                                        <a href="product-detail.html">
-                                            <img src="{% static 'img/product/5.jpg' %}" alt="Product">
+                                        <a href="{% url 'products:details' pk=product.id %}">
+                                            <img src="{{product.image1.url}}" alt="Product">
                                         </a>
                                     </td>
                                     <td>
                                         <div class="product-name">
-                                            <a href="product-detail.html">Organic Strawberry Fruits</a>
+                                            <a href="{% url 'products:details' pk=product.id %}">{{product.name}}</a>
                                         </div>
                                         <div>
                                             2 x
-                                            <span class="product-price">£28.98</span>
+                                            <span class="product-price">${{product.discounted_price}}</span>
                                         </div>
                                     </td>
                                     <td class="action">
-                                        <a class="remove" href="#">
+                                        <a class="remove" href="{% url 'products:add_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                {% endfor %}
                                 <tr class="total">
                                     <td colspan="2">Total:</td>
                                     <td>£92.96</td>
@@ -252,7 +254,7 @@
                                             </td>
                                             <td>
                                                 <div class="product-name">
-                                                    <a href="product-detail.html">{{product.name}}</a>
+                                                    <a href="{% url 'products:details' pk=product.id %}">{{product.name}}</a>
                                                 </div>
                                                 <div>
                                                     2 x
