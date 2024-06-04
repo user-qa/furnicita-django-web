@@ -160,6 +160,11 @@ class CartView(ListView):
         products = ProductsModel.objects.filter(id__in=cart)
         return products
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_price'] = sum([product.discounted_price() for product in context['products']])
+        return context
+
 
 
 

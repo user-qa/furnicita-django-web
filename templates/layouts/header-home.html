@@ -374,7 +374,7 @@
                                                 </div>
                                             </td>
                                             <td class="action">
-                                                <a class="remove" href="{% url 'products:get_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}">
+                                                <a class="remove" href="{% url 'products:add_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </a>
                                             </td>

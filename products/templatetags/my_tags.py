@@ -15,8 +15,6 @@ def get_user_cart(request):
 @register.filter
 def in_cart(request, pk):
     cart = request.session.get('cart', [])
-    print(pk)
-    print(cart)
     if pk in cart:
         return True
     return False
