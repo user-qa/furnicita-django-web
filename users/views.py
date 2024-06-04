@@ -9,8 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, FormView, UpdateView
+from django.views.generic import TemplateView, CreateView, FormView, UpdateView, ListView
 
+from products.models import ProductsModel
 from users.forms import RegisterForm, EmailVerificationForm, LoginForm, AccountModelForm
 from users.models import ConfirmationCodesModel, AccountModel
 
@@ -137,13 +138,37 @@ class AccountView(LoginRequiredMixin, UpdateView):
         return account
 
 
+def add_or_remove(request, pk):
+    cart = request.session.get(key='cart', default=[])
+    if pk in cart:
+        cart.remove(pk)
+    else:
+        cart.append(pk)
+
+    request.session['cart'] = cart
+    next_page = request.GET.get('next')
+    return redirect(next_page)
+
+
+class CartView(ListView):
+    template_name = 'users/cart.html'
+    context_object_name = 'products'
+
+
+    def get_queryset(self):
+        cart = self.request.session.get('cart', [])
+        products = ProductsModel.objects.filter(id__in=cart)
+        return products
+
+
+
+
 
 class WishlistView(TemplateView):
     template_name = 'users/wishlist.html'
 
 
-class CartView(TemplateView):
-    template_name = 'users/cart.html'
+
 
 
 class ChangePasswordView(TemplateView):

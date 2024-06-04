@@ -1,4 +1,5 @@
 {% load static %}
+{% load my_tags %}
 <!doctype html>
 <header>
     <!-- header left mobie -->
@@ -74,8 +75,8 @@
                                 <tr>
                                     <td colspan="3" class="d-flex justify-content-center">
                                         <div class="cart-button">
-                                            <a href="product-cart.html" title="View Cart">View Cart</a>
-                                            <a href="product-checkout.html" title="Checkout">Checkout</a>
+                                            <a href="{% url 'users:cart' %}" title="View Cart">View Cart</a>
+                                            <a href="{% url 'users:checkout' %}" title="Checkout">Checkout</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -137,7 +138,7 @@
                         <div class="myaccount-title ">
                             <a href="#acount" data-toggle="collapse" class="acount">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Account</span>
+                                <span>Settings</span>
                                 <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </a>
 
@@ -146,28 +147,27 @@
                         <div id="acount" class="collapse">
 
                             <div class="account-list-content">
-
+                                {% if request.user.is_authenticated %}
                                 <div>
                                     <a class="login" href="{% url 'users:account' %}" rel="nofollow"
-                                       title="Log in to your customer account">
+                                       title="View your customer account">
                                         <i class="fa fa-cog"></i>
                                         <span>My Account</span>
                                     </a>
                                 </div>
-                                {% if request.user.is_authenticated %}
-                                <div>
-                                    <a class="login" href="{% url 'users:login' %}" rel="nofollow"
-                                       title="Log in to your customer account">
-                                        <i class="fa fa-sign-in"></i>
-                                        <span>Sign in</span>
-                                    </a>
-                                </div>
-                                {% else %}
                                 <div>
                                     <a class="login" href="{% url 'users:logout' %}" rel="nofollow"
                                        title="Log out from your customer account">
                                         <i class="fa fa-sign-in"></i>
                                         <span>Sign out</span>
+                                    </a>
+                                </div>
+                                {% else %}
+                                <div>
+                                    <a class="login" href="{% url 'users:login' %}" rel="nofollow"
+                                       title="Log in to your customer account">
+                                        <i class="fa fa-sign-in"></i>
+                                        <span>Sign in</span>
                                     </a>
                                 </div>
                                 {% endif %}
@@ -243,27 +243,29 @@
                                 <div class="cart-content">
                                     <table>
                                         <tbody>
+                                        {% for product in request|get_user_cart %}
                                         <tr>
                                             <td class="product-image">
-                                                <a href="product-detail.html">
-                                                    <img src="{% static 'img/product/5.jpg' %}" alt="Product">
+                                                <a href="{% url 'products:details' pk=product.id %}">
+                                                    <img src="{{product.image1.url}}" alt="Product">
                                                 </a>
                                             </td>
                                             <td>
                                                 <div class="product-name">
-                                                    <a href="product-detail.html">Organic Strawberry Fruits</a>
+                                                    <a href="product-detail.html">{{product.name}}</a>
                                                 </div>
                                                 <div>
                                                     2 x
-                                                    <span class="product-price">£28.98</span>
+                                                    <span class="product-price">${{product.discounted_price}}</span>
                                                 </div>
                                             </td>
                                             <td class="action">
-                                                <a class="remove" href="#">
+                                                <a class="remove" href="{% url 'products:add_or_remove' pk=product.id %}?next={{request.get_full_path|urlencode}}">
                                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                 </a>
                                             </td>
                                         </tr>
+                                        {% endfor %}
                                         <tr class="total">
                                             <td colspan="2">Total:</td>
                                             <td>£92.96</td>
@@ -272,8 +274,8 @@
                                         <tr>
                                             <td colspan="3" class="d-flex justify-content-center">
                                                 <div class="cart-button">
-                                                    <a href="product-cart.html" title="View Cart">View Cart</a>
-                                                    <a href="product-checkout.html" title="Checkout">Checkout</a>
+                                                    <a href="{% url 'users:cart' %}" title="View Cart">View Cart</a>
+                                                    <a href="{% url 'users:checkout' %}" title="Checkout">Checkout</a>
                                                 </div>
                                             </td>
                                         </tr>
