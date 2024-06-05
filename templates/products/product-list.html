@@ -140,14 +140,13 @@
                                                 <div class="d-flex sort-by-row justify-content-lg-end justify-content-md-end">
 
                                                     <div class="products-sort-order dropdown">
-                                                        <select onchange="addUrlParameter('sort', this.value)" class="select-title">
+                                                        <select class="select-title" name="sort">
                                                             <option value="">Sort by</option>
-                                                            <option {% if request.GET.sort == 'a2z' %}selected{% endif %} value="a2z">Name, A to Z</option>
-                                                            <option {% if request.GET.sort == 'z2a' %}selected{% endif %} value="z2a">Name, Z to A</option>
-                                                            <option {% if request.GET.sort == 'l2h' %}selected{% endif %} value="l2h">Price, low to high</option>
-                                                            <option {% if request.GET.sort == 'h2l' %}selected{% endif %} value="h2l">Price, high to low</option>
+                                                            <option value="name">Name, A to Z</option>
+                                                            <option value="-name">Name, Z to A</option>
+                                                            <option value="price">Price, low to high</option>
+                                                            <option value="-price">Price, high to low</option>
                                                         </select>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,7 +194,7 @@
                                                                         {% if product.is_discounted == False %}
                                                                         <span class="price">${{product.price}}</span>
                                                                         {% else %}
-                                                                        <span class="price">${{product.real_price}}</span>
+                                                                        <span class="price">${{product.discounted_price}}</span>
                                                                         <span style="color:red"><strike>${{product.price}}</strike></span>
                                                                         {% endif %}
                                                                     </div>
@@ -268,7 +267,7 @@
                                                                                 {% if product.is_discounted == False %}
                                                                         <span class="price">${{product.price}}</span>
                                                                         {% else %}
-                                                                        <span class="price">${{product.real_price}}</span>
+                                                                        <span class="price">${{product.discounted_price}}</span>
                                                                         <span style="color:red"><strike>${{product.price}}</strike></span>
                                                                         {% endif %}
                                                                             </div>

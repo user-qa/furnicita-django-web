@@ -48,4 +48,3 @@ class ProductsModelAdmin(admin.ModelAdmin):
     list_filter = ['name', 'count', 'sku', 'created_at']
     search_fields = ['name', 'count', 'sku', 'created_at']
     inlines = [ProductImagesModelAdmin]
-    readonly_fields = ['real_price']
