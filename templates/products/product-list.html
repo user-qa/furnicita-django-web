@@ -140,12 +140,12 @@
                                                 <div class="d-flex sort-by-row justify-content-lg-end justify-content-md-end">
 
                                                     <div class="products-sort-order dropdown">
-                                                        <select class="select-title">
+                                                        <select class="select-title" name="sort">
                                                             <option value="">Sort by</option>
-                                                            <option value="">Name, A to Z</option>
-                                                            <option value="">Name, Z to A</option>
-                                                            <option value="">Price, low to high</option>
-                                                            <option value="">Price, high to low</option>
+                                                            <option value="name">Name, A to Z</option>
+                                                            <option value="-name">Name, Z to A</option>
+                                                            <option value="price">Price, low to high</option>
+                                                            <option value="-price">Price, high to low</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -209,9 +209,9 @@
                                                                            aria-hidden="true" {% if request|in_cart:product.id %} style="color:red" {% endif %}></i>
                                                                     </a>
                                                                 </form>
-                                                                <a class="addToWishlist" href="#" data-rel="1"
+                                                                <a class="addToWishlist" href="{% url 'products:add_or_remove_from_wishlist' pk=product.id %}?next={{request.get_full_path|urlencode}}" data-rel="1"
                                                                    onclick="">
-                                                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                                                    <i class="fa fa-heart" aria-hidden="true" {% if request|in_wishlist:product.id %} style="color:red" {% endif %}></i>
                                                                 </a>
                                                                 <a href="#" class="quick-view hidden-sm-down"
                                                                    data-link-action="quickview">
@@ -285,7 +285,7 @@
                                                                                    aria-hidden="true" {% if request|in_cart:product.id %} style="color:red" {% endif %}></i>Add to cart
                                                                             </a>
                                                                         </form>
-                                                                        <a class="addToWishlist" href="#" data-rel="1"
+                                                                        <a class="addToWishlist" href="{% url 'products:add_or_remove_from_wishlist' pk=product.id %}?next={{request.get_full_path|urlencode}}" data-rel="1"
                                                                            onclick="">
                                                                             <i class="fa fa-heart"
                                                                                aria-hidden="true"></i>

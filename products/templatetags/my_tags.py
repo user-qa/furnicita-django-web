@@ -27,3 +27,12 @@ def total_price(request):
 
     total_price_sum = sum([product.discounted_price() for product in products])
     return total_price_sum
+
+
+@register.filter
+def in_wishlist(request, pk):
+    wishlist = request.session.get('wishlist', [])
+    if pk in wishlist:
+        return True
+    else:
+        return False

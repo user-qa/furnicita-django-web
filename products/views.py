@@ -16,6 +16,8 @@ class ProductsListView(ListView):
         cat = self.request.GET.get('cat')
         col = self.request.GET.get('col')
         man = self.request.GET.get('man')
+        sort = self.request.GET.get('sort')
+
 
         if tag:
             products = products.filter(tags__in=tag)
@@ -25,6 +27,8 @@ class ProductsListView(ListView):
             products = products.filter(color__in=col)
         if man:
             products = products.filter(manufacturer=man)
+        if sort:
+            products = products.order_by(sort)
 
         return products
 

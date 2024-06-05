@@ -169,10 +169,25 @@ class CartView(ListView):
 
 
 
-class WishlistView(TemplateView):
+class WishlistView(ListView):
     template_name = 'users/wishlist.html'
+    context_object_name = 'products'
 
+    def get_queryset(self):
+        wishlist = self.request.session.get('wishlist', [])
+        products = ProductsModel.objects.filter(id__in=wishlist)
+        return products
 
+def add_or_remove_from_wishlist(request, pk):
+    wishlist = request.session.get('wishlist', [])
+    if pk in wishlist:
+        wishlist.remove(pk)
+    else:
+        wishlist.append(pk)
+
+    request.session['wishlist'] = wishlist
+    next = request.GET.get('next', 'products:list')
+    return redirect(next)
 
 
 
