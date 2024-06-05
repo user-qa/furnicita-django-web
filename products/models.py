@@ -99,6 +99,7 @@ class ProductsModel(models.Model):
     sku = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100), MinValueValidator(0)])
+    real_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     catalogs = models.ManyToManyField(CatalogModel, related_name='products')
     tags = models.ManyToManyField(TagModel, related_name='products')
@@ -120,9 +121,6 @@ class ProductsModel(models.Model):
 
     def is_discounted(self):
         return self.discount != 0
-
-    def discounted_price(self):
-        return self.price * (100 - self.discount)/100
 
     class Meta:
         verbose_name = 'Product'

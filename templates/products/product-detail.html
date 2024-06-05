@@ -252,9 +252,9 @@
                                                 <div class="detail-description">
                                                     <div class="price-del">
                                                         {% if product.is_discounted == False %}
-                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        <span class="price">${{product.real_price}}</span>
                                                         {% else %}
-                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        <span class="price">${{product.real_price}}</span>
                                                         <span><strike>${{product.price}}</strike></span>
                                                         {% endif %}
                                                         <span class="float-right">
@@ -593,7 +593,7 @@
                                                                             {% if product.is_discounted == False %}
                                                                         <span class="price">${{product.price}}</span>
                                                                         {% else %}
-                                                                        <span class="price">${{product.discounted_price}}</span>
+                                                                        <span class="price">${{product.real_price}}</span>
                                                                         <span style="color:red"><strike>${{product.price}}</strike></span>
                                                                         {% endif %}
                                                                         </div>
