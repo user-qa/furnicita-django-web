@@ -153,6 +153,7 @@ class CartView(ListView):
     template_name = 'users/cart.html'
     context_object_name = 'products'
 
+
     def get_queryset(self):
         cart = self.request.session.get('cart', [])
         products = ProductsModel.objects.filter(id__in=cart)

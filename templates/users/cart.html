@@ -106,7 +106,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <a href="{% url 'orders:checkout' %}" class="continue btn btn-primary pull-xs-right">
+                                <a {% if products.count == 0 %} href="{% url 'products:list' %}" {% else %} href="{% url 'orders:checkout' %}" {% endif %} class="continue btn btn-primary pull-xs-right">
                                     Continue
                                 </a>
                             </div>

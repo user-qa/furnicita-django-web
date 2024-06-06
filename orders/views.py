@@ -18,17 +18,18 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
-        cart = self.request.session.get('cart', [])
+        context = super().get_context_data(**kwargs)
+        cart = self.request.session.get('cart', None)
+        if cart is None:
+            return redirect('products:list')
         products = ProductsModel.objects.filter(id__in=cart)
-        print(cart)
         total_price = sum([product.real_price for product in products])
-        context = {
+        context.update({
             'number_of_products': len(cart),
             'total_price': total_price,
-        }
+        })
 
         return context
-
 
 
 @login_required
@@ -40,10 +41,7 @@ def order_create_view(request):
                 user=request.user,
                 status=False
             )
-
             cart = request.session.get('cart', None)
-            if cart is None or cart==[]:
-                return redirect('products:list')
             products = ProductsModel.objects.filter(pk__in=cart)
             for product in products:
                 OrderItemModel.objects.create(

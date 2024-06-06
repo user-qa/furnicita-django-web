@@ -37,7 +37,6 @@
                                     <h1 class="title-page">My Orders</h1>
                                     <div id="block-history" class="block-center">
                                         <table class="std table">
-                                            {% for my_order in my_orders %}
                                             <thead>
                                                 <tr>
                                                     <th class="first_item">ID</th>
@@ -47,6 +46,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {% for my_order in my_orders %}
+
                                                 <tr id="wishlist_1">
                                                     <td>
                                                         {{my_order.id}}
