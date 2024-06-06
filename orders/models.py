@@ -8,7 +8,14 @@ UserModel = get_user_model()
 
 class OrdersModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, related_name='orders')
-    status = models.BooleanField(default=False)
+
+    status_choices = (
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Delivered', 'Delivered'),
+        ('Cancelled', 'Cancelled'),
+    )
+    status = models.CharField(max_length=20, choices=status_choices)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

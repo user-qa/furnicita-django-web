@@ -48,6 +48,15 @@ def order_create_view(request):
         else:
             return redirect('products:checkout')
 
+def order_history_view(request):
+    my_orders = OrdersModel.objects.filter(user=request.user)
+    context = {
+        'my_orders': my_orders
+    }
+
+    return render(request, 'users/order-history.html', context=context)
+
+
 
 
 

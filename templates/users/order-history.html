@@ -15,8 +15,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'users:wishlist' %}">
-                                    <span>Wishlists</span>
+                                <a href="{% url 'orders:history' %}">
+                                    <span>Orders History</span>
                                 </a>
                             </li>
                         </ol>
@@ -34,35 +34,39 @@
                         <div id="main">
                             <div id="content" class="page-content">
                                 <div id="mywishlist">
-                                    <h1 class="title-page">My Wishlists</h1>
+                                    <h1 class="title-page">My Orders</h1>
                                     <div id="block-history" class="block-center">
                                         <table class="std table">
+                                            {% for my_order in my_orders %}
                                             <thead>
                                                 <tr>
-                                                    <th class="first_item">Name</th>
-                                                    <th class="item mywishlist_first">SKU</th>
-                                                    <th class="item mywishlist_first">Price</th>
-                                                    <th class="item mywishlist_second">Created time</th>
-                                                    <th class="last_item mywishlist_first">Delete</th>
+                                                    <th class="first_item">ID</th>
+                                                    <th class="item mywishlist_first">Types of Products</th>
+                                                    <th class="item mywishlist_first">Status</th>
+                                                    <th class="item mywishlist_second">Ordered Time</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {% for product in products %}
                                                 <tr id="wishlist_1">
                                                     <td>
-                                                        <a href="{% url 'products:details' pk=product.id %}" onclick="javascript:WishlistManage('block-order-detail', '1');">{{product.name}}</a>
+                                                        {{my_order.id}}
                                                     </td>
-                                                    <td class="bold align_center">
-                                                        {{product.sku}}
+                                                    <td>{{my_order.items.count}}</td>
+                                                    <td>
+                                                    {% if my_order.status == 'Pending' %}
+                                                        <div>{{my_order.status}}    <i class="fa-solid fa-spinner"></i></div>
+                                                    {% elif my_order.status == 'Accepted' %}
+                                                        <div style="color:blue; ">{{my_order.status}}    <i class="fa-solid fa-check"></i></div>
+                                                    {% elif my_order.status == 'Delivered' %}
+                                                        <div style="color:green;">{{my_order.status}}    <i class="fa-sharp fa-regular fa-circle-check"></i></div>
+                                                    {% elif my_order.status == 'Cancelled' %}
+                                                        <div style="color:red;">{{my_order.status}}    <i class="fa-solid fa-spinner"></i></div>
+                                                    {% endif %}
                                                     </td>
-                                                    <td>{{product.real_price}}</td>
-                                                    <td>{{product.created_at|date}}</td>
-                                                    <td class="wishlist_delete">
-                                                        <a href="{% url 'products:add_or_remove_from_wishlist' pk=product.id %}?next={{request.get_full_path|urlencode}}" onclick="return (WishlistDelete('wishlist_1', '1', 'Do you really want to delete this wishlist ?'));">Delete</a>
-                                                    </td>
+                                                    <td>{{my_order.created_at|date:"Y-m-d"}}</td>
                                                 </tr>
-                                            {% endfor %}
                                             </tbody>
+                                            {% endfor %}
                                         </table>
                                     </div>
                                     <div class="page-home">

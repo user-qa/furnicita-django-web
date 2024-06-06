@@ -56,10 +56,10 @@ id="product-detail"
 id="blog-list-sidebar-left" class="blog"
 {% elif '/blogs/details/' in request.path %}
 id="blog-detail" class="blog"
-
-
 {% elif '/orders/checkout/' == request.path %}
 class="product-checkout checkout-cart"
+{% elif '/orders/history/' == request.path %}
+class="user-wishlist blog"
 {% elif '/users/wishlist/' == request.path %}
 class="user-wishlist blog"
 {% elif '/users/change/password/' == request.path %}
