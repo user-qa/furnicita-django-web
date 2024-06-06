@@ -1,7 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.views.generic import ListView
-
-from products.models import ManufacturerModel, CatalogModel, ColorModel, TagModel, ProductsModel
+from django.shortcuts import redirect
+from django.views.generic import ListView, CreateView
+from products.forms import ProductCommentsModelForm
+from products.models import ManufacturerModel, CatalogModel, ColorModel, TagModel, ProductsModel, ProductCommentsModel
 
 
 class ProductsListView(ListView):
@@ -79,3 +81,29 @@ class ProductDetailView(ListView):
         context['related_products'] = self.get_related_products()
 
         return context
+
+
+class CommentsView(LoginRequiredMixin, CreateView):
+    template_name = 'products/product-detail.html'
+    form_class = ProductCommentsModelForm
+    login_url = 'users:login'
+
+    def get_success_url(self):
+        next = self.request.GET.get('next', '/')
+        return next
+
+    def form_valid(self, form):
+        product_id = self.kwargs["pk"]
+        product = ProductsModel.objects.get(id=product_id)
+        current_user = self.request.user
+
+        comment = form.save(commit=False)
+        comment.user = current_user
+        comment.product = product
+        comment.save()
+
+        return redirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        return redirect(self.get_success_url())
+

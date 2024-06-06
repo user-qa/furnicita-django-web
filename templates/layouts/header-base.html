@@ -182,12 +182,14 @@
                                         <span>Register Account</span>
                                     </a>
                                 </div>
+                                {% if request.user.is_authenticated %}
                                 <div class="link_wishlist">
                                     <a href="{% url 'orders:history' %}" title="My Orders">
                                         <i class="fa fa-heart"></i>
                                         <span>My Orders</span>
                                     </a>
                                 </div>
+                                {% endif %}
                                 <div>
                                     <a class="check-out" href="{% url 'orders:checkout' %}" rel="nofollow" title="Checkout">
                                         <i class="fa fa-check" aria-hidden="true"></i>

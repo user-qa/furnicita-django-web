@@ -15,7 +15,7 @@ class OrdersModel(models.Model):
         ('Delivered', 'Delivered'),
         ('Cancelled', 'Cancelled'),
     )
-    status = models.CharField(max_length=20, choices=status_choices)
+    status = models.CharField(max_length=20, choices=status_choices, default=status_choices[0])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

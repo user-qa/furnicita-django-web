@@ -252,9 +252,9 @@
                                                 <div class="detail-description">
                                                     <div class="price-del">
                                                         {% if product.is_discounted == False %}
-                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        <span class="price">${{product.real_price}}</span>
                                                         {% else %}
-                                                        <span class="price">${{product.discounted_price}}</span>
+                                                        <span class="price">${{product.real_price}}</span>
                                                         <span><strike>${{product.price}}</strike></span>
                                                         {% endif %}
                                                         <span class="float-right">
@@ -393,7 +393,7 @@
                                                     <a data-toggle="tab" href="#description" class="active show">Description</a>
                                                 </li>
                                                 <li>
-                                                    <a data-toggle="tab" href="#review">Reviews (2)</a>
+                                                    <a data-toggle="tab" href="#review">Reviews ({{product.comments.count}})</a>
                                                 </li>
                                             </ul>
 
@@ -410,11 +410,12 @@
                                                 <div id="review" class="tab-pane fade">
                                                     <div class="spr-form">
                                                         <div class="user-comment">
+                                                            {% for comment in product.comments.all %}
                                                             <div class="spr-review">
                                                                 <div class="spr-review-header">
                                                                         <span class="spr-review-header-byline">
-                                                                            <strong>Peter Capidal</strong> -
-                                                                            <span>Apr 14, 2018</span>
+                                                                            <strong>{{comment.user.username}}</strong> -
+                                                                            <span>{{comment.created_at|date}}</span>
                                                                         </span>
                                                                     <div class="rating">
                                                                         <div class="star-content">
@@ -427,44 +428,14 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="spr-review-content">
-                                                                    <p class="spr-review-content-body">In feugiat
-                                                                        venenatis enim, non finibus metus bibendum
-                                                                        eu. Proin massa justo, eleifend fermentum varius
-                                                                        quis, semper gravida quam. Cras nec enim sed
-                                                                        lacus viverra luctus. Nunc quis accumsan mauris.
-                                                                        Aliquam fermentum sit amet est id scelerisque.
-                                                                        Nam porta risus metus.</p>
+                                                                    <p class="spr-review-content-body">{{comment.message}}</p>
                                                                 </div>
                                                             </div>
-                                                            <div class="spr-review preview2">
-                                                                <div class="spr-review-header">
-                                                                        <span class="spr-review-header-byline">
-                                                                            <strong>David James</strong> -
-                                                                            <span>Apr 13, 2018</span>
-                                                                        </span>
-                                                                    <div class="rating">
-                                                                        <div class="star-content">
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                            <div class="star"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="spr-review-content">
-                                                                    <p class="spr-review-content-body">In feugiat
-                                                                        venenatis enim, non finibus metus bibendum
-                                                                        eu. Proin massa justo, eleifend fermentum varius
-                                                                        quis, semper gravida quam. Cras nec enim sed
-                                                                        lacus viverra luctus. Nunc quis accumsan mauris.
-                                                                        Aliquam fermentum sit amet est id scelerisque.
-                                                                        Nam porta risus metus.</p>
-                                                                </div>
-                                                            </div>
+                                                            {% endfor %}
                                                         </div>
                                                     </div>
-                                                    <form method="post" action="#" class="new-review-form">
+                                                    <form method="post" action="{% url 'products:comment' pk=product.id %}?next={{request.get_full_path|urlencode}}" class="new-review-form">
+                                                        {% csrf_token %}
                                                         <input type="hidden" name="review[rating]" value="3">
                                                         <input type="hidden" name="product_id">
                                                         <h3 class="spr-form-title">Write a review</h3>
@@ -505,21 +476,11 @@
                                                                 </fieldset>
                                                             </div>
                                                         </fieldset>
-                                                        <fieldset class="spr-form-contact">
-                                                            <div class="spr-form-contact-name">
-                                                                <input class="spr-form-input spr-form-input-text form-control"
-                                                                       value="" placeholder="Enter your name">
-                                                            </div>
-                                                            <div class="spr-form-contact-email">
-                                                                <input class="spr-form-input spr-form-input-email form-control"
-                                                                       value="" placeholder="Enter your email">
-                                                            </div>
-                                                        </fieldset>
                                                         <fieldset>
                                                             <div class="spr-form-review-body">
                                                                 <div class="spr-form-input">
                                                                     <textarea class="spr-form-input-textarea" rows="10"
-                                                                              placeholder="Write your comments here"></textarea>
+                                                                              placeholder="Write your comments here" name="message"></textarea>
                                                                 </div>
                                                             </div>
                                                         </fieldset>
@@ -562,14 +523,14 @@
                                                                          src="{{related_product.image1.url}}"
                                                                          alt="img">
                                                                     <img class="img-fluid image-secondary"
-                                                                         src="{{related_product.image1.url}}"
+                                                                         src="{{related_product.image2.url}}"
                                                                          alt="img">
                                                                 </a>
                                                                 <div class="highlighted-informations">
                                                                     <div class="variant-links">
                                                                         {% for color in related_product.color.all %}
                                                                         <a href="#" class="color beige" style="background-color: {{color.code}}"
-                                                                           title="Beige"></a>
+                                                                           title="{{color.name}}"></a>
                                                                         {% endfor %}
                                                                     </div>
                                                                 </div>
@@ -593,7 +554,7 @@
                                                                             {% if product.is_discounted == False %}
                                                                         <span class="price">${{product.price}}</span>
                                                                         {% else %}
-                                                                        <span class="price">${{product.discounted_price}}</span>
+                                                                        <span class="price">${{product.real_price}}</span>
                                                                         <span style="color:red"><strike>${{product.price}}</strike></span>
                                                                         {% endif %}
                                                                         </div>

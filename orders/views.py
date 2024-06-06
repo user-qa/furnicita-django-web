@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import TemplateView, ListView
+
 from orders.forms import OrderModelForm
+from orders.models import OrderItemModel
 from orders.models import OrdersModel
 from products.models import ProductsModel
-from users.models import AccountModel
-from orders.models import OrderItemModel
 
 UserModel = get_user_model()
 
@@ -17,6 +17,19 @@ class CheckoutView(LoginRequiredMixin, TemplateView):
     template_name = 'products/checkout.html'
     login_url = reverse_lazy('users:login')
 
+    def get_context_data(self, **kwargs):
+        cart = self.request.session.get('cart', [])
+        products = ProductsModel.objects.filter(id__in=cart)
+        print(cart)
+        total_price = sum([product.real_price for product in products])
+        context = {
+            'number_of_products': len(cart),
+            'total_price': total_price,
+        }
+
+        return context
+
+
 
 @login_required
 def order_create_view(request):
@@ -24,39 +37,36 @@ def order_create_view(request):
         form = OrderModelForm(request.POST)
         if form.is_valid():
             new_order = OrdersModel.objects.create(
-                user = request.user,
-                status = False
+                user=request.user,
+                status=False
             )
 
             cart = request.session.get('cart', None)
-            if cart is None:
+            if cart is None or cart==[]:
                 return redirect('products:list')
             products = ProductsModel.objects.filter(pk__in=cart)
             for product in products:
                 OrderItemModel.objects.create(
-                    product = product,
-                    product_name= product.name,
-                    quantity = 1,
-                    size = 'test',
-                    price = product.real_price,
-                    order = new_order,
-                    image1 = product.image1,
-                    image2 = product.image2,
+                    product=product,
+                    product_name=product.name,
+                    quantity=1,
+                    size='test',
+                    price=product.real_price,
+                    order=new_order,
+                    image1=product.image1,
+                    image2=product.image2,
                 )
             request.session['cart'] = []
             return redirect('products:list')
         else:
-            return redirect('products:checkout')
-
-def order_history_view(request):
-    my_orders = OrdersModel.objects.filter(user=request.user)
-    context = {
-        'my_orders': my_orders
-    }
-
-    return render(request, 'users/order-history.html', context=context)
+            return redirect('orders:checkout')
 
 
+class OrderHistoryView(LoginRequiredMixin, ListView):
+    template_name = 'users/order-history.html'
+    context_object_name = 'my_orders'
+    login_url = reverse_lazy('users:login')
 
-
-
+    def get_queryset(self):
+        my_orders = OrdersModel.objects.filter(user=self.request.user)
+        return my_orders

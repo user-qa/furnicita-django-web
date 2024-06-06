@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from products.models import ManufacturerModel, CatalogModel, SizeModel, ColorModel, TagModel, ProductsModel, ProductImagesModel
+from products.models import ManufacturerModel, CatalogModel, SizeModel, ColorModel, TagModel, ProductsModel, \
+    ProductImagesModel, ProductCommentsModel
 
 
 @admin.register(ManufacturerModel)
@@ -49,3 +50,8 @@ class ProductsModelAdmin(admin.ModelAdmin):
     search_fields = ['name', 'count', 'sku', 'created_at']
     inlines = [ProductImagesModelAdmin]
     readonly_fields = ['real_price']
+
+@admin.register(ProductCommentsModel)
+class ProductCommentsModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'created_at']
+

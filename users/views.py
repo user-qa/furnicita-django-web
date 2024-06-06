@@ -97,8 +97,6 @@ class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
 
-    success_url = reverse_lazy('pages:home')
-
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
@@ -106,8 +104,7 @@ class LoginView(FormView):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user=user)
-
-            return redirect(self.success_url)
+            return redirect('/')
         else:
             storage = messages.get_messages(self.request)
             storage.used = True
