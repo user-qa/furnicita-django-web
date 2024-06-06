@@ -9,12 +9,12 @@
                     <div class="breadcrumb">
                         <ol>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'pages:home' %}">
                                     <span>Home</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{% url 'orders:checkout' %}">
                                     <span>Checkout</span>
                                 </a>
                             </li>
@@ -43,58 +43,18 @@
                                                         ORDER AS A GUEST
                                                     </a>
                                                 </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#checkout-login-form">
-                                                        SIGN IN
-                                                    </a>
-                                                </li>
                                             </ul>
                                             <div class="tab-content">
                                                 <div class="tab-pane fade in active show" id="checkout-guest-form" role="tabpanel">
-                                                    <form action="#" id="customer-form" class="js-customer-form" method="post">
+                                                    <form action="{% url 'orders:order' %}" id="customer-form" class="js-customer-form" method="post">
+                                                        {% csrf_token %}
                                                         <div>
                                                             <input type="hidden" name="id_customer" value="">
                                                             <div class="form-group row">
-                                                                <input class="form-control" name="firstname" type="text" placeholder="Full name">
+                                                                <input class="form-control" name="address" type="text" placeholder="Address">
                                                             </div>
                                                             <div class="form-group row">
-                                                                <input class="form-control" name="email" type="email" placeholder="Email">
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <input class="form-control" name="email" type="email" placeholder="Phone">
-                                                            </div>
-                                                            <div class="desc-password">
-                                                                <span class="font-weight-bold">Create an account</span>
-                                                                <span>(optional)</span>
-                                                                <br>
-                                                                <span class="text-muted">And save time on your next order!</span>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="input-group js-parent-focus">
-                                                                    <input class="form-control js-child-focus" name="password" type="password" placeholder=" Password">
-                                                                </div>
-                                                            </div>
-                                                            <div class="hidden-comment">
-                                                                <div class="form-group row">
-                                                                    <input class="form-control" name="birthday" type="text" value="" placeholder=" Birthdate">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row check-input">
-                                                                <span class="custom-checkbox d-inline-flex">
-                                                                    <input class="check" name="optin" type="checkbox" value="1">
-                                                                    <label class="label-absolute">Receive offers from our partners</label>
-                                                                </span>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <span class="custom-checkbox d-inline-flex check-input">
-                                                                    <input class="check" name="newsletter" type="checkbox" value="1">
-                                                                    <label>Sign up for our newsletter
-                                                                        <br>
-                                                                        <em>You may unsubscribe at any moment. For that purpose,
-                                                                            please find our contact info in the legal notice.
-                                                                        </em>
-                                                                    </label>
-                                                                </span>
+                                                                <input class="form-control" name="phone" type="text" placeholder="Phone">
                                                             </div>
                                                         </div>
                                                         <div class="clearfix">
@@ -109,51 +69,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <div class="tab-pane fade" id="checkout-login-form" role="tabpanel">
-                                                    <form id="login-form" action="#" method="post" class="customer-form">
-                                                        <div>
-                                                            <input type="hidden" name="back" value="">
-                                                            <div class="form-group row">
-                                                                <input class="form-control" name="email" type="email" placeholder="Email">
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="input-group js-parent-focus">
-                                                                    <input class="form-control js-child-focus js-visible-password" name="password" type="password" placeholder="Password">
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="forgot-password">
-                                                                    <a href="user-reset-password.html" rel="nofollow">
-                                                                        Forgot your password?
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="clearfix">
-                                                            <div class="row">
-                                                                <button class="continue btn btn-primary pull-xs-right" name="continue" data-link-action="sign-in" type="submit" value="1">
-                                                                    Continue
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="checkout-personal-step">
-                                            <h3 class="step-title h3">
-                                                <span class="step-number">2</span>Addresses
-                                            </h3>
-                                        </div>
-                                        <div class="checkout-personal-step">
-                                            <h3 class="step-title h3">
-                                                <span class="step-number">3</span>Shipping Method
-                                            </h3>
-                                        </div>
-                                        <div class="checkout-personal-step">
-                                            <h3 class="step-title h3">
-                                                <span class="step-number">4</span>Payment
-                                            </h3>
                                         </div>
                                     </div>
                                     <div class="cart-grid-right col-xs-12 col-lg-3">

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from users.views import RegisterView, LoginView, AccountView, WishlistView, CartView, CheckoutView, ChangePasswordView, logout_view, verify_email
+from users.views import RegisterView, LoginView, AccountView, WishlistView, CartView, ChangePasswordView, logout_view, verify_email
 
 app_name = 'users'
 
@@ -12,6 +12,5 @@ urlpatterns = [
     path('change/password/', ChangePasswordView.as_view(), name='change-password'),
     path('wishlist/', WishlistView.as_view(), name='wishlist'),
     path('cart/', CartView.as_view(), name='cart'),
-    path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('verify-email/', verify_email, name='verify_email')
 ]

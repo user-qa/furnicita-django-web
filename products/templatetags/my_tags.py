@@ -25,7 +25,7 @@ def total_price(request):
     cart = request.session.get('cart', [])
     products = ProductsModel.objects.filter(id__in=cart)
 
-    total_price_sum = sum([product.discounted_price() for product in products])
+    total_price_sum = sum([product.real_price for product in products])
     return total_price_sum
 
 

@@ -96,6 +96,7 @@ class RegisterView(CreateView):
 class LoginView(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
+
     success_url = reverse_lazy('pages:home')
 
     def form_valid(self, form):
@@ -105,6 +106,7 @@ class LoginView(FormView):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user=user)
+
             return redirect(self.success_url)
         else:
             storage = messages.get_messages(self.request)
@@ -154,7 +156,6 @@ class CartView(ListView):
     template_name = 'users/cart.html'
     context_object_name = 'products'
 
-
     def get_queryset(self):
         cart = self.request.session.get('cart', [])
         products = ProductsModel.objects.filter(id__in=cart)
@@ -162,11 +163,8 @@ class CartView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['total_price'] = sum([product.discounted_price() for product in context['products']])
+        context['total_price'] = sum([product.real_price for product in context['products']])
         return context
-
-
-
 
 
 class WishlistView(ListView):
@@ -177,6 +175,7 @@ class WishlistView(ListView):
         wishlist = self.request.session.get('wishlist', [])
         products = ProductsModel.objects.filter(id__in=wishlist)
         return products
+
 
 def add_or_remove_from_wishlist(request, pk):
     wishlist = request.session.get('wishlist', [])
@@ -190,10 +189,5 @@ def add_or_remove_from_wishlist(request, pk):
     return redirect(next)
 
 
-
 class ChangePasswordView(TemplateView):
     template_name = 'users/reset-password.html'
-
-
-class CheckoutView(TemplateView):
-    template_name = 'products/checkout.html'

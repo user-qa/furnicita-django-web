@@ -33,3 +33,8 @@ class AccountModelForm(forms.ModelForm):
     class Meta:
         model = AccountModel
         exclude = ('user',)
+
+class AccountModelForm(forms.ModelForm):
+    class Meta:
+        model = AccountModel
+        exclude = ('user',)

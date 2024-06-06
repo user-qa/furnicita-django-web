@@ -52,7 +52,7 @@
                                                                data-id_customization="0">{{product.name}}</a>
                                                         </div>
                                                         <div class="product-line-info product-price">
-                                                            <span class="value">${{product.discounted_price}}</span>
+                                                            <span class="value">${{product.real_price}}</span>
                                                         </div>
                                                         <div class="product-line-info">
                                                             <span class="label-atrr">Size:</span>
@@ -86,7 +86,7 @@
                                                             <div class="col-md-5 col price">
                                                                 <div class="label">Total:</div>
                                                                 <div class="product-price total">
-                                                                    ${{product.discounted_price}}
+                                                                    ${{product.real_price}}
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-2 col text-xs-right align-self-end">
@@ -106,7 +106,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <a href="{% url 'users:checkout' %}" class="continue btn btn-primary pull-xs-right">
+                                <a href="{% url 'orders:checkout' %}" class="continue btn btn-primary pull-xs-right">
                                     Continue
                                 </a>
                             </div>
