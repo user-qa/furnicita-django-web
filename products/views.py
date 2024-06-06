@@ -8,7 +8,7 @@ class ProductsListView(ListView):
     template_name = 'products/product-list.html'
     context_object_name = 'products'
     model = ProductsModel
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
         products = ProductsModel.objects.all().order_by('-created_at')
@@ -17,7 +17,7 @@ class ProductsListView(ListView):
         col = self.request.GET.get('col')
         man = self.request.GET.get('man')
         sort = self.request.GET.get('sort')
-
+        q = self.request.GET.get('q')
 
         if tag:
             products = products.filter(tags__in=tag)
@@ -28,7 +28,16 @@ class ProductsListView(ListView):
         if man:
             products = products.filter(manufacturer=man)
         if sort:
-            products = products.order_by(sort)
+            if sort == 'a2z':
+                products = products.order_by('name')
+            if sort == 'z2a':
+                products = products.order_by('-name')
+            if sort == 'l2h':
+                products = products.order_by('real_price')
+            if sort == 'h2l':
+                products = products.order_by('-real_price')
+        if q:
+            products = products.filter(name__icontains=q)
 
         return products
 
