@@ -42,7 +42,7 @@
                         <form id="customer-form" action="{% url 'users:login' %}" method="post">
                             {% csrf_token %}
                             <div>
-                                <input type="hidden" name="back" value="my-account">
+                                <input type="hidden" name="next" value="{{ request.GET.next|default:'/' }}">
                                 <div class="form-group no-gutters">
                                     <input class="form-control" name="username" type="text" placeholder="Username">
                                 </div>

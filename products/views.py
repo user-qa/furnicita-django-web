@@ -59,7 +59,7 @@ class ProductDetailView(ListView):
     model = ProductsModel
 
     def get_queryset(self):
-        product = ProductsModel.objects.get(id=self.kwargs["pk"])
+        product = ProductsModel.objects.get(pk=self.kwargs['pk'])
         return product
 
     def get_related_products(self):
@@ -89,7 +89,7 @@ class CommentsView(LoginRequiredMixin, CreateView):
     login_url = 'users:login'
 
     def get_success_url(self):
-        next = self.request.GET.get('next', '/')
+        next = self.request.POST.get('next')
         return next
 
     def form_valid(self, form):

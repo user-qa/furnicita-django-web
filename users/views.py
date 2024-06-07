@@ -98,13 +98,17 @@ class LoginView(FormView):
     form_class = LoginForm
 
     def form_valid(self, form):
+        next_page = self.request.POST.get('next', '/')
+        if 'comment' in next_page:
+            next_page = next_page.replace('comment', 'details')
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
 
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user=user)
-            return redirect('/')
+            print(f"Redirecting to: {next_page}")
+            return redirect(next_page)
         else:
             storage = messages.get_messages(self.request)
             storage.used = True

@@ -434,10 +434,10 @@
                                                             {% endfor %}
                                                         </div>
                                                     </div>
-                                                    <form method="post" action="{% url 'products:comment' pk=product.id %}?next={{request.get_full_path|urlencode}}" class="new-review-form">
+                                                    <form method="post" action="{% url 'products:comment' pk=product.id %}" class="new-review-form">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="review[rating]" value="3">
-                                                        <input type="hidden" name="product_id">
+                                                        <input type="hidden" name="next" value="{{ request.get_full_path|urlencode }}">
                                                         <h3 class="spr-form-title">Write a review</h3>
                                                         <fieldset>
                                                             <div class="spr-form-review-rating">

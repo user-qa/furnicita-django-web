@@ -135,3 +135,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'killiyaezov@gmail.com'
 EMAIL_HOST_PASSWORD = "wmyahtxvziwqsdly"
+
+LOGIN_URL = 'users/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

@@ -10,5 +10,4 @@ urlpatterns = [
     path('cart/<int:pk>/', add_or_remove, name='add_or_remove'),
     path('wishlist/<int:pk>/', add_or_remove_from_wishlist, name='add_or_remove_from_wishlist'),
     path('comment/<int:pk>/', CommentsView.as_view(), name='comment'),
-
 ]
