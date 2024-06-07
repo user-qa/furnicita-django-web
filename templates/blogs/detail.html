@@ -97,9 +97,9 @@
                                                         </div>
                                                         <div class="late-item">
                                                             <p class="content-title">
-                                                                <a href="blog-detail.html">{{related_post.titlee}}</a>
+                                                                <a href="blog-detail.html">{{related_post.title}}</a>
                                                             </p>
-                                                            <p class="description">{{related_post.short_description}}
+                                                            <p class="description">{{related_post.description}}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -109,6 +109,9 @@
 
                                     </div>
                                     <div class="reply late-item">
+                                        <div class="blog-comment" id="blog-comment">
+                                                <h2 class="title-block">Comments</h2>
+                                            </div>
                                         {% for blog_comment in blog.blog_comments.all %}
                                                 <div class="comment-content">
                                                 <p class="user-title">
