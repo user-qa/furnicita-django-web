@@ -80,6 +80,7 @@ class ProductDetailView(ListView):
         context['tags'] = TagModel.objects.all()
         context['related_products'] = self.get_related_products()
 
+
         return context
 
 

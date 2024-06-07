@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -77,3 +78,23 @@ class BlogModel(models.Model):
     class Meta:
         verbose_name = 'Blog'
         verbose_name_plural = 'Blogs'
+
+
+
+UserModel = get_user_model()
+class BlogCommentsModel(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='blog_comments')
+    blog = models.ForeignKey(BlogModel, on_delete=models.CASCADE, related_name='blog_comments')
+    message = models.TextField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.message
+
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+

@@ -48,7 +48,7 @@
                                         <div class="border-detail">
                                             <p class="post-info float-left">
                                                 <span>{{blog.created_at | naturaltime}}</span>
-                                                <span>113 Comments</span>
+                                                <span>{{blog.blog_comments.count}} Comments</span>
                                                 <span>{{blog.author.name}}</span>
                                             </p>
                                             <div class="btn-group">
@@ -86,117 +86,54 @@
                                     </div>
                                     <div class="related">
                                         <h2 class="title-block">Related News</h2>
+                                        {% for related_post in related_posts %}
                                         <div class="main-blogs">
-                                            <div class="row">
-                                                {% for blog in related_blogs %}
-                                                <div class="col-md-4">
-                                                    <div class="hover-after">
-                                                        <a href="{% url 'blogs:details' pk=blog.id %}">
-                                                            <img src="{{blog.image.url}}" alt="img"
-                                                                 class="img-fluid">
-                                                        </a>
-                                                    </div>
-                                                    <div class="late-item">
-                                                        <p class="content-title">
-                                                            <a href="{% url 'blogs:details' pk=blog.id %}">{{blog.title}}</a>
-                                                        </p>
-                                                        <p class="description">{{blog.description}} </p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="hover-after">
+                                                            <a href="{% url 'blogs:details' pk=related_post.id %}">
+                                                                <img src="{{related_post.image.url}}" alt="{{related_post.title}}" class="img-fluid">
+                                                            </a>
+                                                        </div>
+                                                        <div class="late-item">
+                                                            <p class="content-title">
+                                                                <a href="blog-detail.html">{{related_post.titlee}}</a>
+                                                            </p>
+                                                            <p class="description">{{related_post.short_description}}
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                {% endfor %}
                                             </div>
-                                        </div>
+                                        {% endfor %}
+
                                     </div>
                                     <div class="reply late-item">
-                                        <div class="blog-comment" id="blog-comment">
-                                            <h2 class="title-block">Comments</h2>
-                                            <img src="{% static 'img/blog/user1.jpg' %}" alt="img"
-                                                 class="float-left right">
-                                        </div>
-                                        <div class="comment-content">
-                                            <p class="user-title">
-                                                <a href="#">JOHN DOE</a>
-                                                <span class="time">Posted on Mar 17, 2017 at 6:57am /
-                                                        <a href="#">repost</a> /
-                                                        <span class="green">
-                                                            <a href="#">Reply</a>
-                                                        </span>
+                                        {% for blog_comment in blog.blog_comments.all %}
+                                                <div class="comment-content">
+                                                <p class="user-title">
+                                                    <a href="#">{{blog_comment.user.username}}</a>
+                                                    <span class="time">Posted on {{blog_comment.created_at}}
                                                     </span>
-                                            </p>
-                                            <p class="content-comment">Lorem ipsum dolor sit amet, consectetur
-                                                adipisicing elit, do eiusmod tempor
-                                                incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam.
-                                            </p>
-                                        </div>
-                                        <div class="blog-comment margin-right-comment">
-                                            <div class="avatar">
-                                                <img src="{% static 'img/blog/user2.jpg' %}" alt="img"
-                                                     class="float-left">
-                                            </div>
-                                            <div class="comment-content">
-                                                <p class="user-title">
-                                                    <a href="#">JOHN DOE</a>
-                                                    <span class="time">Posted on Mar 17, 2017 at 6:57am /
-                                                            <a href="#">repost</a> /
-                                                            <span class="green">
-                                                                <a href="#">Reply</a>
-                                                            </span>
-                                                        </span>
                                                 </p>
-                                                <p class="content-comment">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit, do eiusmod
-                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim
-                                                    veniam.
+                                                <p class="content-comment">{{blog_comment.message}}
                                                 </p>
                                             </div>
-                                        </div>
-                                        <div class="blog-comment">
-                                            <div class="avatar">
-                                                <img src="{% static 'img/blog/user1.jpg' %}" alt="img"
-                                                     class="float-left right">
-                                            </div>
-                                            <div class="comment-content">
-                                                <p class="user-title">
-                                                    <a href="#">JOHN DOE</a>
-                                                    <span class="time">Posted on Mar 17, 2017 at 6:57am /
-                                                            <a href="#">repost</a> /
-                                                            <span class="green">
-                                                                <a href="#">Reply</a>
-                                                            </span>
-                                                        </span>
-                                                </p>
-                                                <p class="content-comment">Lorem ipsum dolor sit amet, consectetur
-                                                    adipisicing elit, do eiusmod
-                                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim
-                                                    veniam.
-                                                </p>
-                                            </div>
-                                        </div>
+
+                                        {% endfor %}
                                     </div>
                                     <div class="submit-comment" id="respond">
-                                        <h2 class="title-block">Submit comment</h2>
                                         <div id="commentInput">
-                                            <form action="#" method="post" id="commentform">
-                                                <input type="hidden" name="comment_parent" id="comment_parent"
-                                                       value="0">
-                                                <div class="row">
-                                                    <div class="form-group col col-sm-12 col-md-4 ">
-                                                        <input type="text" class="inputName form-control" name="name"
-                                                               placeholder="Your Name *">
-                                                    </div>
-                                                    <div class="form-group col col-sm-12  col-md-4">
-                                                        <input type="text" class="inputMail form-control" name="mail"
-                                                               placeholder="Your E-mail *">
-                                                    </div>
-                                                    <div class="form-group col col-sm-12  col-md-4">
-                                                        <input type="text" class="form-control" name="website"
-                                                               placeholder="Your Website">
-                                                    </div>
-                                                </div>
+                                            <form action="{% url 'blogs:comment' pk=blog.id %}" method="post" id="commentform">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="blog_id" id="comment_parent"
+                                                       value="{{blog.id}}">
+                                                <input type="hidden" name="next" id="next"
+                                                       value="{{request.get_full_path|urlencode}}">
                                                 <div class="row">
                                                     <div class="form-group col col-md-12">
                                                         <textarea tabindex="4" class="inputContent form-control grey"
-                                                                  rows="10" name="comment"
+                                                                  rows="10" name="message"
                                                                   placeholder="Your Message"></textarea>
                                                     </div>
                                                 </div>

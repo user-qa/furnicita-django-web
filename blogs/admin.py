@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blogs.models import AuthorModel, BlogCategoryModel, BlogModel, BlogTagModel
+from blogs.models import AuthorModel, BlogCategoryModel, BlogModel, BlogTagModel, BlogCommentsModel
 
 
 @admin.register(AuthorModel)
@@ -30,3 +30,8 @@ class BlogModelAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_at']
     search_fields = ['title', 'created_at']
 
+@admin.register(BlogCommentsModel)
+class BlogCommentsModelAdmin(admin.ModelAdmin):
+    list_filter = ['message', 'created_at']
+    list_display = ['message', 'created_at']
+    search_fields = ['message', 'created_at']
